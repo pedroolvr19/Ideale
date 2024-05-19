@@ -32,15 +32,6 @@ export default function LoginScreen({ navigation }) {
       .signInWithEmailAndPassword(email, senha)
       .then(() => {
         console.log("Entrou com sucesso");
-        if (email.endsWith("@ideale.com")) {
-          navigation.navigate("HomeMedico");
-        } else if (
-          email.endsWith("@gmail.com") ||
-          email.endsWith("@hotmail.com") ||
-          email.endsWith("@outlook.com")
-        ) {
-          navigation.navigate("HomePaciente");
-        }
       })
       .catch((error) => {
         if (error.code === "auth/invalid-credential") {

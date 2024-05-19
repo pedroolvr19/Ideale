@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Button, Alert } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import auth from '@react-native-firebase/auth';
-import storage from '@react-native-firebase/storage';
 const PerfilScreen = () => {
   const nome = "João da Silvasdasdasa";
   const email = auth().currentUser.email;

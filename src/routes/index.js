@@ -8,7 +8,7 @@ import AgendamentoPacienteScreen from '../Home/Paciente/AgendamentoPacienteScree
 import NosconhecaScreen from '../Home/NosconhecaScreen';
 import RedefinirSenhaScreen from '../Login/RedefinirSenhaScreen';
 import LoginScreen from '../Login/LoginScreen';
-import PerfilScreen from '../Home/Paciente/PerfilScreen';
+import PerfilScreen from '../Home/Medico/Perfilmedico';
 import SelecionarMedicoScreen from '../Home/Agendamento/SelecionarMedicoScreen';
 import ContatoScreen from '../Home/Duvidas/ContatoScreen';
 import HomePacienteScreen from '../Home/Paciente/HomePacienteScreen';
@@ -30,6 +30,7 @@ const Stack = createStackNavigator();
 export const RootNavigate = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const userEmail = auth().currentUser.email;
   const handleStateChange = (userPlayload) => {
     setUser(userPlayload);
     if (initializing) setInitializing(false);
@@ -38,106 +39,112 @@ export const RootNavigate = () => {
     const subscribe = auth().onAuthStateChanged(handleStateChange);
     return subscribe;
   }, []);
+
+  const StackMedico = () => {
+    return (
+      <>
+        <Stack.Screen
+          name="BoletimDiarioMScreen"
+          component={BoletimDiarioMScreen}
+        />
+        <Stack.Screen
+          name="HomeMedico"
+          component={HomeMedicoScreen}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen name="PopUpScreen" component={PopUpScreen} />
+        <Stack.Screen name="ArquivosM" component={ArquivosM} />
+        <Stack.Screen name="ConfirmarScreen" component={ConfirmarScreen} />
+        <Stack.Screen
+          name="AgendamentoGestorScreen"
+          component={AgendamentoGestorScreen}
+        />
+      </>
+    );
+  }
+
+  const handleUserType = () => {
+    return (
+      <>
+        {
+          email.endsWith("@ideale.com")
+            ? (
+              <StackMedico />
+            ) : (
+              <Stack.Screen
+                name="HomePaciente"
+                component={RootPacienteTab}
+                options={{ headerShown: false }}
+              />
+            )
+        }
+        <Stack.Screen
+          name="PerfilScreen"
+          component={PerfilScreen}
+          options={{ headerShown: false }}
+        />
+      </>
+    );
+
+  }
+
   return (
     <NavigationContainer>
-      {user ? (
-        <Stack.Navigator
-        initialRouteName="HomePaciente"
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#17322D",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
-        >
-          <Stack.Screen
-            name="BoletimDiarioMScreen"
-            component={BoletimDiarioMScreen}
-          />
-          <Stack.Screen
-            name="RedefinirSenha"
-            component={RedefinirSenhaScreen}
-            options={{
-              title: "Redefinir Senha",
-              headerStyle: { backgroundColor: "#17322D" },
-            }}
-          />
-          <Stack.Screen
-            name="PerfilScreen"
-            component={PerfilScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="SelecionarMedico"
-            component={SelecionarMedicoScreen}
-          />
-          <Stack.Screen
-            name="ContatoScreen"
-            component={ContatoScreen}
-            options={{
-              title: "Contatos",
-              headerStyle: { backgroundColor: "#17322D" },
-            }}
-          />
-          <Stack.Screen
-            name="HomePaciente"
-            component={RootPacienteTab}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="HomeMedico"
-            component={HomeMedicoScreen}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen name="PopUpScreen" component={PopUpScreen} />
-          <Stack.Screen name="ArquivosM" component={ArquivosM} />
-          <Stack.Screen
-            name="AgendarConsultaScreen"
-            component={AgendarConsultaScreen}
-          />
-          <Stack.Screen name="ConfirmarScreen" component={ConfirmarScreen} />
-          <Stack.Screen
-            name="AgendamentoGestorScreen"
-            component={AgendamentoGestorScreen}
-          />
-        </Stack.Navigator>
-      ) : (
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {
-              backgroundColor: "#17322D",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-            },
-          }}
-        >
-          <Stack.Screen
-            name="Preload"
-            component={PreloadScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Inicio"
-            component={InicioScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Cadastro"
-            component={CadastroScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      )}
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#17322D",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      >
+        {user ?
+          handleUserType() : (
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: "#17322D",
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                },
+              }}
+            >
+              <Stack.Screen
+                name="Preload"
+                component={PreloadScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Inicio"
+                component={InicioScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Cadastro"
+                component={CadastroScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="RedefinirSenha"
+                component={RedefinirSenhaScreen}
+                options={{
+                  title: "Redefinir Senha",
+                  headerStyle: { backgroundColor: "#17322D" },
+                }}
+              />
+            </Stack.Navigator>
+          )}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
