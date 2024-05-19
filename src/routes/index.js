@@ -22,6 +22,7 @@ import InicioScreen from '../Login/InicioScreen';
 import PreloadScreen from '../Login/PreloadScreen';
 import AgendamentoGestorScreen from '../Home/Gestor/AgendamentoGestorScreen';
 import BoletimDiarioMScreen from '../Home/Medico/BoletimDiarioMScreen';
+import { RootPacienteTab } from "../Home/Paciente/routes";
 
 
 const Stack = createStackNavigator();
@@ -41,7 +42,7 @@ export const RootNavigate = () => {
     <NavigationContainer>
       {user ? (
         <Stack.Navigator
-        initialRouteName="HomeMedico"
+        initialRouteName="HomePaciente"
           screenOptions={{
             headerStyle: {
               backgroundColor: "#17322D",
@@ -52,39 +53,6 @@ export const RootNavigate = () => {
             },
           }}
         >
-          <Stack.Screen
-            name="BoletimDiario"
-            component={BoletimDiarioScreen}
-            options={{
-              title: "Boletim Diário",
-              headerStyle: { backgroundColor: "#17322D" },
-            }}
-           
-          />
-          <Stack.Screen
-            name="AgendamentoPacienteScreen"
-            component={AgendamentoPacienteScreen}
-            options={{
-              title: "Inicio",
-              headerStyle: { backgroundColor: "#17322D" },
-            }}
-          />
-          <Stack.Screen
-            name="NosconhecaScreen"
-            component={NosconhecaScreen}
-            options={{
-              title: "Quem somos",
-              headerStyle: { backgroundColor: "#17322D" },
-            }}
-          />
-          <Stack.Screen
-            name="Nossoguia"
-            component={NossoguiaScreen}
-            options={{
-              title: "Nossoguia",
-              headerStyle: { backgroundColor: "#17322D" },
-            }}
-          />
           <Stack.Screen
             name="BoletimDiarioMScreen"
             component={BoletimDiarioMScreen}
@@ -116,7 +84,7 @@ export const RootNavigate = () => {
           />
           <Stack.Screen
             name="HomePaciente"
-            component={HomePacienteScreen}
+            component={RootPacienteTab}
             options={{ headerShown: false }}
           />
           <Stack.Screen

@@ -89,11 +89,6 @@ function HomeTab({ navigation }) {
             <Text style={styles.buttonText}>Agendamentos</Text>
             
           </TouchableOpacity>
-         
-            
-         
-          
-        
         </View>
       </View>
     </ImageBackground>

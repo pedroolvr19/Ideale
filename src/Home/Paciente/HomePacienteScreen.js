@@ -2,61 +2,8 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
-import ArquivosScreen from '../ArquivosScreen';
-import PerfilScreen from './PerfilScreen';
-import AgendamentoPacienteScreen from './AgendamentoPacienteScreen'; // Importe a tela de AgendamentoPacienteScreen
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
 
-const Tab = createBottomTabNavigator();
-
-const HomePacienteScreen = ({ navigation }) => {
-  const handleVerAgendamentos = () => {
-    navigation.navigate('AgendamentoPacienteScreen');
-  };
-
-  return (
-    <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: '#308168',
-        inactiveTintColor: '#308168',
-        style: styles.tabBar,
-        labelStyle: styles.tabLabel,
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={HomeTab}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Arquivos"
-        component={ArquivosScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="document-text" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Perfil"
-        component={PerfilScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="people" size={size} color={color} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
-
-function HomeTab({ navigation }) {
+function HomePacienteScreen({ navigation }) {
   return (
     <ImageBackground
       source={require('../img/background.png')}
