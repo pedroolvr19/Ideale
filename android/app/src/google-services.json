@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "886584378640",
+    "firebase_url": "https://idealecare-26a84-default-rtdb.firebaseio.com",
+    "project_id": "idealecare-26a84",
+    "storage_bucket": "idealecare-26a84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886584378640:android:3d523b2944a75f9bf55195",
+        "android_client_info": {
+          "package_name": "com.pedrorty.IdealeCare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "886584378640-kp103l3p7pc18l9gda0g44tb552f4tu3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pedrorty.IdealeCare",
+            "certificate_hash": "e816c3879a33959bf92cf56274f9bc87e64e26e5"
+          }
+        },
+        {
+          "client_id": "886584378640-uhs2b2lkir8765vo7lqo58ngtsfvd8cm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pedrorty.IdealeCare",
+            "certificate_hash": "e1487d5caf1d806aea95ca5dc54d22e30ccfa478"
+          }
+        },
+        {
+          "client_id": "886584378640-g5fbr9q9hdtsua1kvl4e4hfj6ad3sj1q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRdmg-MzGkosKpkzVtvChB_3Qs0CCafO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "886584378640-g5fbr9q9hdtsua1kvl4e4hfj6ad3sj1q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
