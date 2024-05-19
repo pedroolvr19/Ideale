@@ -4,8 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 const PerfilScreen = () => {
-  const nome = "João da Silva";
-  const email = "joao.silva@example.com";
+  const nome = "João da Silvasdasdasa";
+  const email = auth().currentUser.email;
 
   const handleLogout = () => {
     console.log("Usuario deslogado");

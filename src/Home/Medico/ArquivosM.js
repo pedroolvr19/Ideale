@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Button, Image, StyleSheet, Alert } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function ArquivosM() {

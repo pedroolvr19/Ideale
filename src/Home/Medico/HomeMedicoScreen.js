@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import ArquivosScreen from '../ArquivosScreen';
 import PerfilScreen from '../Medico/Perfilmedico';
+import ArquivosM from './ArquivosM';
 
 const Tab = createBottomTabNavigator();
 
