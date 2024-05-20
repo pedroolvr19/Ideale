@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ArquivosScreen from '../../ArquivosScreen';
-import PerfilScreen from '../PerfilScreen';
-import { PacienteStack } from './stack';
-import { styles } from '../HomePacienteScreen';
 import { Ionicons } from '@expo/vector-icons';
+import { PacienteStack } from '../../../Home/Paciente/routes/stack';
+import ArquivosScreen from '../../../Home/ArquivosScreen';
+import PerfilScreen from '../../../Home/Paciente/PerfilScreen';
+import { styles } from '../../../Home/Paciente/HomePacienteScreen';
 
 const Tab = createBottomTabNavigator();
 

@@ -1,7 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import BoletimDiarioMScreen from "../../Medico/BoletimDiarioMScreen";
 import HomePacienteScreen from "../HomePacienteScreen";
-import AgendamentoPacienteScreen from "../AgendamentoPacienteScreen";
+import NosconhecaScreen from "../../NosconhecaScreen";
+import NossoguiaScreen from "../../Duvidas/NossoguiaScreen";
+import { Agenda } from "../../../Module/BackOffice/Screen/Agenda";
 
 const Stack = createStackNavigator();
 export const PacienteStack = () => {
@@ -28,8 +30,8 @@ export const PacienteStack = () => {
 
             />
             <Stack.Screen
-                name="AgendamentoPacienteScreen"
-                component={AgendamentoPacienteScreen}
+                name="Agenda"
+                component={Agenda}
                 options={{
                     title: "Inicio",
                     headerStyle: { backgroundColor: "#17322D" },

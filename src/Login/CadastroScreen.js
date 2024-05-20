@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import messaging from '@react-native-firebase/messaging';
 
 const CadastroScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
 
-  const handleCriarConta = () => {
+  const handleCriarConta = async () => {
     if (!email || !senha || !confirmarSenha) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
@@ -20,10 +22,16 @@ const CadastroScreen = ({ navigation }) => {
     }
    {
       if(!email && !senha) return;
+      const tokenFCM = await messaging().getToken();
       auth()
           .createUserWithEmailAndPassword(email, senha,confirmarSenha)
           .then(() => {
               console.log("Usuário criado");
+              const userId = auth().currentUser?.email;
+              if(!email.endsWith("@ideale.com")) firestore().collection("Paciente").doc(userId).set({
+                token_fcm: tokenFCM,
+                
+              })
           })
           .catch((error) => {
               if (error.code === 'auth/email-already-in-use') {

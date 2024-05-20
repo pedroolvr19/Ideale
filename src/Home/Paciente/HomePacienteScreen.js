@@ -1,5 +1,4 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 
@@ -25,7 +24,7 @@ function HomePacienteScreen({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('AgendamentoPacienteScreen')} // Navegue para AgendamentoPacienteScreen
+            onPress={() => navigation.navigate('Agenda')} // Navegue para AgendamentoPacienteScreen
           >
             <Ionicons name="calendar" size={76} color="#308168" />
             <Text style={styles.buttonText}>Agendamentos</Text>
@@ -53,7 +52,7 @@ function HomePacienteScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',

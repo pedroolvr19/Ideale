@@ -16,7 +16,7 @@ const handleWhatsAppVisitaPress = () => {
   Linking.openURL(`whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`);
 };
 
-const AgendamentoPacienteScreen = ({ navigation }) => {
+const AgendaPaciente = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleMeusAgendamentosPress = () => {
@@ -162,4 +162,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AgendamentoPacienteScreen;
+export default AgendaPaciente;

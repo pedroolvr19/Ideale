@@ -1,67 +1,9 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
-import ArquivosScreen from '../ArquivosScreen';
-import PerfilScreen from '../Medico/Perfilmedico';
-import ArquivosM from './ArquivosM';
+import auth from "@react-native-firebase/auth";
 
-const Tab = createBottomTabNavigator();
-
-const HomeMedicoScreen = ({ navigation }) => {
-  const handleVerAgendamentos = () => {
-    navigation.navigate('AgendamentoGestorScreen');
-    
-    <View style={styles.container}>
-    <Text style={styles.title}>Bem-vindo, Médico!</Text>
-    <Button title="Ver Agendamentos" onPress={handleVerAgendamentos} />
-  </View>
-
-
-  };
-
-  return (
-    <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: '#308168',
-        inactiveTintColor: '#308168',
-        style: styles.tabBar,
-        labelStyle: styles.tabLabel,
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        component={HomeTab}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Arquivos"
-        component={ArquivosM}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="document-text" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Perfil"
-        component={PerfilScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="people" size={size} color={color} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
-
-function HomeTab({ navigation }) {
+function HomeMedicoScreen({ navigation }) {
   return (
     <ImageBackground
       source={require('../img/background.png')}
@@ -73,21 +15,26 @@ function HomeTab({ navigation }) {
           style={styles.image}
         />
         <View style={styles.buttonContainer}>
+          {
+            auth().currentUser?.email === "gestor@ideale.com" && (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('BoletimDiarioMScreen')}
+              >
+                <Ionicons name="book" size={76} color="#308168" />
+                <Text style={styles.buttonText}>Boletim Diário</Text>
+
+              </TouchableOpacity>
+
+            )
+          }
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('BoletimDiarioMScreen')}
-          >
-            <Ionicons name="book" size={76} color="#308168" />
-            <Text style={styles.buttonText}>Boletim Diário</Text>
-           
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('AgendamentoGestorScreen')} // Navegue para AgendamentoPacienteScreen
+            onPress={() => navigation.navigate('Agenda')} // Navegue para AgendamentoPacienteScreen
           >
             <Ionicons name="calendar" size={76} color="#308168" />
             <Text style={styles.buttonText}>Agendamentos</Text>
-            
+
           </TouchableOpacity>
         </View>
       </View>
@@ -95,7 +42,7 @@ function HomeTab({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import messaging from '@react-native-firebase/messaging';
 
-const  AgendamentoGestorScreen = () => {
+const ConfirmarAgendamento = () => {
   const [patientName, setPatientName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -17,7 +17,6 @@ const  AgendamentoGestorScreen = () => {
     try {
       // Supondo que você tenha o token de dispositivo do paciente armazenado
       const patientDeviceToken = await getPatientDeviceToken(email);
-
       await messaging().sendMessage({
         to: patientDeviceToken,
         notification: {
@@ -112,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AgendamentoGestorScreen;
+export default ConfirmarAgendamento;

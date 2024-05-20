@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const AgendamentosMedicoScreen = () => {
+const AgendaMedico = () => {
   // Aqui você pode recuperar os agendamentos do médico e exibi-los
   return (
     <View style={styles.container}>
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AgendamentosMedicoScreen;
+export default AgendaMedico;
