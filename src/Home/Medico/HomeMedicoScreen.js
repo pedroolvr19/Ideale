@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import auth from "@react-native-firebase/auth";
@@ -19,7 +20,7 @@ function HomeMedicoScreen({ navigation }) {
             auth().currentUser?.email === "gestor@ideale.com" && (
               <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate('BoletimDiarioMScreen')}
+                onPress={() => navigation.navigate('BoletimGestor')}
               >
                 <Ionicons name="book" size={76} color="#308168" />
                 <Text style={styles.buttonText}>Boletim Diário</Text>
@@ -95,7 +96,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#3D5945',
-    fontSize: 19,
+    fontSize: 18,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
     marginTop: 10,

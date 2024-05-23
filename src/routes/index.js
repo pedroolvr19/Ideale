@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import RedefinirSenhaScreen from '../Login/RedefinirSenhaScreen';
 import LoginScreen from '../Login/LoginScreen';
-import PerfilScreen from '../Home/Medico/Perfilmedico';
 import CadastroScreen from '../Login/CadastroScreen';
 import InicioScreen from '../Login/InicioScreen';
 import PreloadScreen from '../Login/PreloadScreen';
 import { RootPacienteTab } from "../Home/Paciente/routes";
 import { RootMedicoTab } from "../Home/Medico/routes";
+import PerfilPM from "../Module/BackOffice/Component/PerfilPM";
 
 
 const Stack = createStackNavigator();
@@ -36,7 +36,7 @@ export const RootNavigate = () => {
               <Stack.Screen
                 name="HomeMedico"
                 component={RootMedicoTab}
-                options={{ headerShown: true }}
+                options={{ headerShown: false }}
               />
             ) : (
               <Stack.Screen
@@ -48,7 +48,7 @@ export const RootNavigate = () => {
         }
         <Stack.Screen
           name="PerfilScreen"
-          component={PerfilScreen}
+          component={PerfilPM}
           options={{ headerShown: false }}
         />
       </>

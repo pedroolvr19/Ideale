@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from '@react-navigation/native';
 
-export default function BoletimDiarioMScreen() {
+export default function BoletimGestor() {
 
   
 

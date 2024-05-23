@@ -1,13 +1,36 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, Button, Alert } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, Image, Alert, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
-const PerfilScreen = () => {
-  const nome = "João da Silva";
-  const email = "joao.silva@example.com";
+const PerfilPM = () => {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [numeroPaciente, setNumeroContato] = useState('');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const currentUser = auth().currentUser;
+      if (currentUser) {
+        setEmail(currentUser.email);
+        const userId = currentUser.uid;
+        const userDoc = await firestore().collection('Paciente').doc(userId).get();
+        if (userDoc.exists) {
+          const userData = userDoc.data();
+          setNome(userData.nome);
+          setNumeroContato(userData.numeroPaciente);
+        } else {
+          console.log('Documento do usuário não encontrado.');
+        }
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleLogout = () => {
+    console.log("Usuário deslogado");
     auth()
       .signOut()
       .then(() => {
@@ -26,7 +49,7 @@ const PerfilScreen = () => {
     >
       <View style={styles.container}>
         <Image
-          source={require("../img/logo2.png")} // Substitua pelo caminho da imagem do paciente
+          source={require("../PerfilPM/perfil.png")} // Substitua pelo caminho da imagem do paciente
           style={styles.profileImage}
         />
         <View style={styles.infoContainer}>
@@ -38,18 +61,14 @@ const PerfilScreen = () => {
           <View style={styles.infoBox}>
             <Text style={styles.infoText}>{email}</Text>
           </View>
-          <Text style={styles.infoTitle}>CPF:</Text>
+          <Text style={styles.infoTitle}>Número de Contato:</Text>
           <View style={styles.infoBox}>
-            <Text style={styles.infoText}></Text>
+            <Text style={styles.infoText}>{numeroPaciente}</Text>
           </View>
         </View>
-        <View style={styles.logoutButtonContainer}>
-          <Button
-            title="Sair"
-            onPress={handleLogout}
-            color="#ff5c5c"
-          />
-        </View>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Sair</Text>
+        </TouchableOpacity>
       </View>
     </LinearGradient>
   );
@@ -60,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 70,
+    paddingTop: 50,
   },
   profileImage: {
     width: 150,
@@ -89,12 +108,24 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   infoText: {
+    color: '#17322D',
+    fontWeight: 'bold',
     fontSize: 16,
   },
-  logoutButtonContainer: {
+  logoutButton: {
+    backgroundColor: '#17322D',
+    padding: 15,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 20,
-    width: "80%",
+    width: 200,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
 });
 
-export default PerfilScreen;
+export default PerfilPM;

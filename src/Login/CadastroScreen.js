@@ -9,9 +9,11 @@ const CadastroScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
+  const [nome, setNome] = useState('');
+  const [numeroPaciente, setNumeroPaciente] = useState('');
 
   const handleCriarConta = async () => {
-    if (!email || !senha || !confirmarSenha) {
+    if (!email || !senha || !confirmarSenha || !nome || !numeroPaciente) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
     }
@@ -20,28 +22,38 @@ const CadastroScreen = ({ navigation }) => {
       Alert.alert('Erro', 'As senhas não coincidem. Por favor, tente novamente.');
       return;
     }
-   {
-      if(!email && !senha) return;
-      const tokenFCM = await messaging().getToken();
-      auth()
-          .createUserWithEmailAndPassword(email, senha,confirmarSenha)
+
+    const tokenFCM = await messaging().getToken();
+    auth()
+      .createUserWithEmailAndPassword(email, senha)
+      .then(() => {
+        console.log("Usuário criado");
+        const userId = auth().currentUser?.email;
+        if (!email.endsWith("@ideale.com")) {
+          firestore().collection("Paciente").doc(userId).set({
+            nome: nome,
+            numeroPaciente: numeroPaciente,
+            token_fcm: tokenFCM,
+          })
           .then(() => {
-              console.log("Usuário criado");
-              const userId = auth().currentUser?.email;
-              if(!email.endsWith("@ideale.com")) firestore().collection("Paciente").doc(userId).set({
-                token_fcm: tokenFCM,
-                
-              })
+            console.log("Dados do paciente salvos no Firestore");
           })
           .catch((error) => {
-              if (error.code === 'auth/email-already-in-use') {
-                  throw new Error('Este email não pode ser usado!');
-              }
-              if (error.code === 'auth/invalid-email') {
-                  throw new Error('Email invalido...')
-              }
-          })
-  }
+            console.error("Erro ao salvar os dados do paciente:", error);
+          });
+        }
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          Alert.alert('Erro', 'Este email já está em uso.');
+        } else if (error.code === 'auth/invalid-email') {
+          Alert.alert('Erro', 'Email inválido.');
+        } else {
+          Alert.alert('Erro', 'Erro ao criar conta. Por favor, tente novamente mais tarde.');
+          console.error('Erro ao criar conta:', error);
+        }
+      });
+
     navigation.navigate('Login');
   };
 
@@ -50,41 +62,54 @@ const CadastroScreen = ({ navigation }) => {
       colors={['#10C2A2', '#11D26E']}
       style={styles.container}
     >
-    <View style={styles.container}>
-      <Image
-        source={require('../Home/img/logo2.png')}
-        style={styles.logo}
-      />
-      <Text style={styles.title}>Criar Conta</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Senha"
-        secureTextEntry
-        value={senha}
-        onChangeText={setSenha}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirmar Senha"
-        secureTextEntry
-        value={confirmarSenha}
-        onChangeText={setConfirmarSenha}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleCriarConta}>
-        <Text style={styles.buttonText}>Criar Conta</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.footerLink}>Já tem uma conta? Faça login</Text>
-      </TouchableOpacity>
-    </View>
+      <View style={styles.container}>
+        <Image
+          source={require('../Home/img/logo2.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.title}>Criar Conta</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Nome"
+          value={nome}
+          onChangeText={setNome}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Número para Contado"
+          keyboardType="numeric"
+          value={numeroPaciente}
+          onChangeText={setNumeroPaciente}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Senha"
+          secureTextEntry
+          value={senha}
+          onChangeText={setSenha}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirmar Senha"
+          secureTextEntry
+          value={confirmarSenha}
+          onChangeText={setConfirmarSenha}
+        />
+        <TouchableOpacity style={styles.button} onPress={handleCriarConta}>
+          <Text style={styles.buttonText}>Criar Conta</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.footerLink}>Já tem uma conta? Faça login</Text>
+        </TouchableOpacity>
+      </View>
     </LinearGradient>
   );
 };
@@ -94,7 +119,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-   
     padding: 20,
   },
   title: {

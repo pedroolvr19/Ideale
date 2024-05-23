@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
-const NosConhecaScreen = () => {
+const Nosssoguia = () => {
   return (
     <LinearGradient
       colors={['#10C2A2', '#11D26E']}
@@ -12,18 +12,13 @@ const NosConhecaScreen = () => {
         
         <Text style={styles.title}>Quem Somos</Text>
         <Text style={styles.text}>
-          Somos uma empresa dedicada a oferecer os melhores serviços de saúde para nossos pacientes.
-          Nossa missão é proporcionar um atendimento humanizado e de qualidade, garantindo o bem-estar
-          e a satisfação de todos que confiam em nosso trabalho.
+         bla bla bla depois eu boto o nome do povo 
         </Text>
         <Text style={styles.text}>
-          Com uma equipe altamente qualificada e instalações modernas, estamos sempre prontos para
-          atender às necessidades de nossos pacientes, oferecendo um cuidado personalizado e eficiente.
-          Nossa visão é ser referência em saúde, inovando e melhorando constantemente nossos serviços.
+        
         </Text>
         <Text style={styles.text}>
-          Agradecemos por escolher nossos serviços. Estamos comprometidos em cuidar de você e de sua saúde
-          com todo o respeito e dedicação que você merece.
+         
         </Text>
       </ScrollView>
     </LinearGradient>
@@ -60,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NosConhecaScreen;
+export default Nosssoguia;

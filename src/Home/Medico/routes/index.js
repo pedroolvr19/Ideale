@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ArquivosM from '../ArquivosM';
-import PerfilScreen from '../Perfilmedico';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from '../HomeMedicoScreen';
 import { MedicoStack } from './stack';
+import ArquivoMedico from '../../.././Module/BackOffice/Component/ArquivoMedico';
+import PerfilPM from '../../../Module/BackOffice/Component/PerfilPM';
 const Tab = createBottomTabNavigator();
 export const RootMedicoTab = () => {
     return (
@@ -17,18 +17,18 @@ export const RootMedicoTab = () => {
             }}
         >
             <Tab.Screen
-                name="HomeTab"
+                name="Home"
                 component={MedicoStack}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="home" size={size} color={color} />
                     ),
-                    headerShown: false,
+                   
                 }}
             />
             <Tab.Screen
                 name="Arquivos"
-                component={ArquivosM}
+                component={ArquivoMedico}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="document-text" size={size} color={color} />
@@ -37,7 +37,7 @@ export const RootMedicoTab = () => {
             />
             <Tab.Screen
                 name="Perfil"
-                component={PerfilScreen}
+                component={PerfilPM}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="people" size={size} color={color} />

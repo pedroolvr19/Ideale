@@ -16,7 +16,7 @@ function HomePacienteScreen({ navigation }) {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('MeuBoletimScreen')}
+            onPress={() => navigation.navigate('BoletimPaciente')}
           >
             <Ionicons name="book" size={76} color="#308168" />
             <Text style={styles.buttonText}>Boletim Diário</Text>
@@ -24,7 +24,7 @@ function HomePacienteScreen({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Agenda')} // Navegue para AgendamentoPacienteScreen
+            onPress={() => navigation.navigate('Agenda')} 
           >
             <Ionicons name="calendar" size={76} color="#308168" />
             <Text style={styles.buttonText}>Agendamentos</Text>
@@ -105,7 +105,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#3D5945',
-    fontSize: 19,
+    fontSize: 18,
     fontWeight: 'bold',
     textDecorationLine: 'underline',
     marginTop: 10,

@@ -1,9 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import BoletimDiarioMScreen from "../../Medico/BoletimDiarioMScreen";
+import BoletimPaciente from "../../../Module/BackOffice/Component/BoletimPaciente";
 import HomePacienteScreen from "../HomePacienteScreen";
 import NosconhecaScreen from "../../NosconhecaScreen";
-import NossoguiaScreen from "../../Duvidas/NossoguiaScreen";
+import NossoguiaScreen from "../Nossoguia/img/NossoguiaScreen";
 import { Agenda } from "../../../Module/BackOffice/Screen/Agenda";
+
 
 const Stack = createStackNavigator();
 export const PacienteStack = () => {
@@ -14,44 +15,32 @@ export const PacienteStack = () => {
             <Stack.Screen
                 name="HomePacienteScreen"
                 component={HomePacienteScreen}
-                options={{
-                    title: "Boletim Diário",
-                    headerStyle: { backgroundColor: "#17322D" },
-                }}
+                options={{ headerShown: false }}
+                
 
             />
             <Stack.Screen
-                name="BoletimDiario"
-                component={BoletimDiarioMScreen}
-                options={{
-                    title: "Boletim Diário",
-                    headerStyle: { backgroundColor: "#17322D" },
-                }}
-
+                name="BoletimPaciente"
+                component={BoletimPaciente}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Agenda"
                 component={Agenda}
                 options={{
-                    title: "Inicio",
+                    
                     headerStyle: { backgroundColor: "#17322D" },
                 }}
             />
             <Stack.Screen
                 name="NosconhecaScreen"
                 component={NosconhecaScreen}
-                options={{
-                    title: "Quem somos",
-                    headerStyle: { backgroundColor: "#17322D" },
-                }}
+                options={{ headerShown: false }}
             />
             <Stack.Screen
                 name="Nossoguia"
                 component={NossoguiaScreen}
-                options={{
-                    title: "Nossoguia",
-                    headerStyle: { backgroundColor: "#17322D" },
-                }}
+                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     );

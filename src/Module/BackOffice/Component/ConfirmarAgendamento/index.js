@@ -15,8 +15,12 @@ const ConfirmarAgendamento = () => {
     }
 
     try {
-      // Supondo que você tenha o token de dispositivo do paciente armazenado
       const patientDeviceToken = await getPatientDeviceToken(email);
+      if (!patientDeviceToken) {
+        Alert.alert("Erro", "Token do dispositivo não encontrado.");
+        return;
+      }
+
       await messaging().sendMessage({
         to: patientDeviceToken,
         notification: {
@@ -34,11 +38,26 @@ const ConfirmarAgendamento = () => {
     }
   };
 
-  // Função fictícia para obter o token do dispositivo do paciente com base no email
   const getPatientDeviceToken = async (email) => {
-    // Aqui você pode fazer uma chamada para o seu backend para obter o token do dispositivo do paciente
-    // Esta função deve retornar o token do dispositivo
-    return "pacient-device-token";
+    try {
+      const response = await fetch('https://idealecare-26a84-default-rtdb.firebaseio.com/', { // Substitua pela sua URL real
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao buscar token do dispositivo.');
+      }
+
+      const data = await response.json();
+      return data.deviceToken;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   };
 
   return (
