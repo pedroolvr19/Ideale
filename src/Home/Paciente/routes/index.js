@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { PacienteStack } from './stack';
 import { styles } from '../HomePacienteScreen';
 import { Ionicons } from '@expo/vector-icons';
-import ArquivoPaciente from '../../.././Module/BackOffice/Component/ArquivoPaciente';
 import PerfilPM from '../../../Module/BackOffice/Component/PerfilPM';
+import { ArquivosStack } from './arquivosStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +30,7 @@ export const RootPacienteTab = () => {
             />
             <Tab.Screen
                 name="Arquivos"
-                component={ArquivoPaciente}
+                component={ArquivosStack}
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="document-text" size={size} color={color} />

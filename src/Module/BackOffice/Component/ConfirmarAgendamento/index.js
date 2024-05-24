@@ -2,40 +2,62 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import messaging from '@react-native-firebase/messaging';
+import { buscarPacientePeloEmail } from "../../service/buscarPacientePeloEmail";
+import { AgendarConsulta } from "../../service/AgendarConsulta";
 
 const ConfirmarAgendamento = () => {
-  const [patientName, setPatientName] = useState("");
+  const [pacienteNome, setPacienteNome] = useState("");
   const [email, setEmail] = useState("");
+  const [emailMedico, setEmailMedico] = useState("");
   const [message, setMessage] = useState("");
+  const [dataConsulta, setDataConsulta] = useState("");
+
+  const completarCampos = async (email) => {
+    if(email.endsWith("@gmail.com")) {
+      const data = await buscarPacientePeloEmail({ pacienteEmail: email });
+      const userName = data.docs[0].data().nome
+      setPacienteNome(userName)
+    }
+  }
 
   const handleSendConfirmation = async () => {
-    if (!patientName || !email || !message) {
+    console.log(!pacienteNome, !email, !message)
+    if (!pacienteNome || !email || !message) {
       Alert.alert("Erro", "Por favor, preencha todos os campos.");
       return;
     }
 
-    try {
-      const patientDeviceToken = await getPatientDeviceToken(email);
-      if (!patientDeviceToken) {
-        Alert.alert("Erro", "Token do dispositivo não encontrado.");
-        return;
-      }
+    AgendarConsulta("paciente", {
+      email: email,
+      dataConsulta: dataConsulta,
+      medico: emailMedico,
+      nomePaciente: pacienteNome,
+      nomeMedico: "pedro"
+    });
 
-      await messaging().sendMessage({
-        to: patientDeviceToken,
-        notification: {
-          title: "Confirmação de Agendamento",
-          body: message,
-        },
-      });
 
-      Alert.alert("Sucesso", "Mensagem de confirmação enviada com sucesso.");
-      setPatientName("");
-      setEmail("");
-      setMessage("");
-    } catch (error) {
-      Alert.alert("Erro", "Houve um erro ao enviar a mensagem: " + error.message);
-    }
+    // try {
+    //   const patientDeviceToken = await getPatientDeviceToken(email);
+    //   if (!patientDeviceToken) {
+    //     Alert.alert("Erro", "Token do dispositivo não encontrado.");
+    //     return;
+    //   }
+
+    //   await messaging().sendMessage({
+    //     to: patientDeviceToken,
+    //     notification: {
+    //       title: "Confirmação de Agendamento",
+    //       body: message,
+    //     },
+    //   });
+
+    //   Alert.alert("Sucesso", "Mensagem de confirmação enviada com sucesso.");
+    //   setPacienteNome("");
+    //   setEmail("");
+    //   setMessage("");
+    // } catch (error) {
+    //   Alert.alert("Erro", "Houve um erro ao enviar a mensagem: " + error.message);
+    // }
   };
 
   const getPatientDeviceToken = async (email) => {
@@ -71,16 +93,36 @@ const ConfirmarAgendamento = () => {
           style={styles.input}
           placeholder="Nome do Paciente"
           placeholderTextColor="#aaa"
-          value={patientName}
-          onChangeText={setPatientName}
+          value={pacienteNome}
+          onChangeText={setPacienteNome}
         />
         <TextInput
           style={styles.input}
           placeholder="Email do Paciente"
           placeholderTextColor="#aaa"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(value) => {
+            completarCampos(value);
+            setEmail(value);
+          }}
           keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Email do Medico"
+          placeholderTextColor="#aaa"
+          value={emailMedico}
+          onChangeText={setEmailMedico}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Data da consulta"
+          placeholderTextColor="#aaa"
+          value={dataConsulta}
+          onChangeText={setDataConsulta}
           autoCapitalize="none"
         />
         <TextInput

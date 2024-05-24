@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
 import { Linking } from 'react-native';
+import auth from "@react-native-firebase/auth";
+import { ConsultarAgenda } from '../../service/ConsultarAgenda';
 
 const handleWhatsAppPress = () => {
   const phoneNumber = '+558183685500';
@@ -18,6 +20,7 @@ const handleWhatsAppVisitaPress = () => {
 
 const AgendaPaciente = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [listaDeConsultas, setListaDeConsultas] = useState([]);
 
   const handleMeusAgendamentosPress = () => {
     setModalVisible(true);
@@ -26,6 +29,16 @@ const AgendaPaciente = ({ navigation }) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+
+  const lidarComLista = async () => {
+    const userEmail = auth().currentUser.email;
+    const lista = await ConsultarAgenda("paciente", { email: userEmail });
+    setListaDeConsultas(lista);
+  }
+
+  useEffect(() => {
+    lidarComLista();
+  }, [])
 
   return (
     <LinearGradient
@@ -54,7 +67,7 @@ const AgendaPaciente = ({ navigation }) => {
           <Ionicons name="calendar" size={24} color="white" style={styles.icon} />
           <Text style={styles.buttonText}>Meus Agendamentos</Text>
         </TouchableOpacity>
-        
+
         {/* Modal */}
         <Modal
           animationType="slide"
@@ -65,22 +78,23 @@ const AgendaPaciente = ({ navigation }) => {
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Situação dos Agendamentos</Text>
-              
+
               {/* Informações sobre os agendamentos e ícones */}
-              <View style={styles.infoContainer}>
-                <Ionicons name="checkmark-circle-outline" size={24} color="#4CAF50" style={styles.icon} />
-                <Text style={styles.infoText}>Aprovado</Text>
-              </View>
 
-              <View style={styles.infoContainer}>
-                <Ionicons name="alert-circle-outline" size={24} color="#FFC107" style={styles.icon} />
-                <Text style={styles.infoText}>Em Análise</Text>
-              </View>
-
-              <View style={styles.infoContainer}>
-                <Ionicons name="close-circle-outline" size={24} color="#FF5722" style={styles.icon} />
-                <Text style={styles.infoText}>Rejeitado</Text>
-              </View>
+              <FlatList
+                data={listaDeConsultas}
+                keyExtractor={(_, index) => index}
+                renderItem={({ item }) => (
+                  <>
+                    <View style={styles.infoContainer}>
+                      <Ionicons name="checkmark-circle-outline" size={24} color="#4CAF50" style={styles.icon} />
+                      <Text style={styles.infoText}>Aprovado</Text>
+                    </View>
+                    <Text>Você vai consultar com o medico: {item.medico_resposanvel} no dia:</Text>
+                    <Text>{item.data_da_consulta}</Text>
+                  </>
+                )}
+              />
 
               {/* Botão de fechar o modal */}
               <TouchableOpacity onPress={closeModal} style={styles.closeButton}>

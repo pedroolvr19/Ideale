@@ -1,53 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import firestore from '@react-native-firebase/firestore';
+import { buscarPdfDoPaciente } from '../../service/buscarPdfDoPaciente';
 
-const ArquivoPaciente = () => {
+const ArquivoPaciente = ({ navigation }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        // Supondo que você tenha uma coleção 'files' no Firestore
-        const filesSnapshot = await firestore().collection('files').get();
-        const filesList = filesSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setFiles(filesList);
-      } catch (error) {
-        console.error('Erro ao buscar arquivos: ', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const lidarComOPdf = async () => {
+    const url_pdf = await buscarPdfDoPaciente();
+    setFiles(url_pdf);
+  }
 
-    fetchFiles();
+  useEffect(() => {
+    lidarComOPdf()
   }, []);
 
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#10C2A2" />
-      </View>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <View style={styles.loadingContainer}>
+  //       <ActivityIndicator size="large" color="#10C2A2" />
+  //     </View>
+  //   );
+  // }
 
   return (
     <LinearGradient colors={['#10C2A2', '#11D26E']} style={styles.container}>
       <Text style={styles.title}>Arquivos Enviados pelo Médico</Text>
-      <FlatList
-        data={files}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.fileItem} onPress={() => Linking.openURL(item.url)}>
-            <Text style={styles.fileName}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-        ListEmptyComponent={<Text style={styles.emptyMessage}>Nenhum arquivo disponível</Text>}
-      />
+      <TouchableOpacity style={styles.fileItem} onPress={() => navigation.navigate("ArquivosDoPaciente", { url_pdf: files })}>
+        <Text style={styles.fileName}>nome</Text>
+      </TouchableOpacity>
     </LinearGradient>
   );
 };

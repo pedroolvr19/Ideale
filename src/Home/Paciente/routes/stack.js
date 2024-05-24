@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BoletimPaciente from "../../../Module/BackOffice/Component/BoletimPaciente";
 import HomePacienteScreen from "../HomePacienteScreen";
 import NosconhecaScreen from "../../NosconhecaScreen";
-import NossoguiaScreen from "../Nossoguia/img/NossoguiaScreen";
+import NossoguiaScreen from "../Nossoguia/Nossoguia";
 import { Agenda } from "../../../Module/BackOffice/Screen/Agenda";
 
 

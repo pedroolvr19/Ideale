@@ -28,11 +28,11 @@ const CadastroScreen = ({ navigation }) => {
       .createUserWithEmailAndPassword(email, senha)
       .then(() => {
         console.log("Usuário criado");
-        const userId = auth().currentUser?.email;
+        const userId = auth().currentUser?.uid;
         if (!email.endsWith("@ideale.com")) {
           firestore().collection("Paciente").doc(userId).set({
             nome: nome,
-            numeroPaciente: numeroPaciente,
+            telefone: numeroPaciente,
             token_fcm: tokenFCM,
           })
           .then(() => {

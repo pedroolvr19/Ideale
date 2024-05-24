@@ -19,7 +19,7 @@ const PerfilPM = () => {
         if (userDoc.exists) {
           const userData = userDoc.data();
           setNome(userData.nome);
-          setNumeroContato(userData.numeroPaciente);
+          setNumeroContato(userData.telefone);
         } else {
           console.log('Documento do usuário não encontrado.');
         }
