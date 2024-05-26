@@ -15,11 +15,14 @@ export const MedicoStack = () => {
             <Stack.Screen
                 name="BoletimGestor"
                 component={BoletimGestor}
+                options={{ headerShown: false }}
+                
             />
             <Stack.Screen name="Arquivos" component={ArquivoMedico} />
             <Stack.Screen
                 name="Agenda"
                 component={Agenda}
+                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     );

@@ -25,6 +25,7 @@ function HomePacienteScreen({ navigation }) {
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Agenda')} 
+            options={{ headerShown: false }}
           >
             <Ionicons name="calendar" size={76} color="#308168" />
             <Text style={styles.buttonText}>Agendamentos</Text>

@@ -21,6 +21,7 @@ function HomeMedicoScreen({ navigation }) {
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate('BoletimGestor')}
+                
               >
                 <Ionicons name="book" size={76} color="#308168" />
                 <Text style={styles.buttonText}>Boletim Diário</Text>
@@ -31,7 +32,8 @@ function HomeMedicoScreen({ navigation }) {
           }
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Agenda')} // Navegue para AgendamentoPacienteScreen
+            onPress={() => navigation.navigate('Agenda')}
+            options={{ headerShown: false }} // Navegue para AgendamentoPacienteScreen
           >
             <Ionicons name="calendar" size={76} color="#308168" />
             <Text style={styles.buttonText}>Agendamentos</Text>
