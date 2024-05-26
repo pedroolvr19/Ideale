@@ -74,10 +74,12 @@ const AgendaPaciente = ({ navigation }) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={closeModal}
+         
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Situação dos Agendamentos</Text>
+              
 
               {/* Informações sobre os agendamentos e ícones */}
 
@@ -114,6 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    headerShown: false
   },
   button: {
     backgroundColor: '#263E32',

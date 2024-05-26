@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import messaging from '@react-native-firebase/messaging';
 import { buscarPacientePeloEmail } from "../../service/buscarPacientePeloEmail";
@@ -7,21 +7,26 @@ import { AgendarConsulta } from "../../service/AgendarConsulta";
 
 const ConfirmarAgendamento = () => {
   const [pacienteNome, setPacienteNome] = useState("");
+  const [medicoNome, setmedicoNome] = useState("");
   const [email, setEmail] = useState("");
   const [emailMedico, setEmailMedico] = useState("");
   const [message, setMessage] = useState("");
   const [dataConsulta, setDataConsulta] = useState("");
 
   const completarCampos = async (email) => {
-    if(email.endsWith("@gmail.com")) {
+    if (email.endsWith("@gmail.com")) {
       const data = await buscarPacientePeloEmail({ pacienteEmail: email });
-      const userName = data.docs[0].data().nome
-      setPacienteNome(userName)
+      const userName = data.docs[0].data().nome;
+      setPacienteNome(userName);
+      if (email.endsWith("@ideale.com")) {
+        const data = await buscarPacientePeloEmail({ emailMedico: email });
+        const userName = data.docs[0].data().nome;
+        setmedicoNome(userName);
     }
   }
+  };
 
   const handleSendConfirmation = async () => {
-    console.log(!pacienteNome, !email, !message)
     if (!pacienteNome || !email || !message) {
       Alert.alert("Erro", "Por favor, preencha todos os campos.");
       return;
@@ -32,32 +37,13 @@ const ConfirmarAgendamento = () => {
       dataConsulta: dataConsulta,
       medico: emailMedico,
       nomePaciente: pacienteNome,
-      nomeMedico: "pedro"
+      nomeMedico: medicoNome,
     });
 
-
-    // try {
-    //   const patientDeviceToken = await getPatientDeviceToken(email);
-    //   if (!patientDeviceToken) {
-    //     Alert.alert("Erro", "Token do dispositivo não encontrado.");
-    //     return;
-    //   }
-
-    //   await messaging().sendMessage({
-    //     to: patientDeviceToken,
-    //     notification: {
-    //       title: "Confirmação de Agendamento",
-    //       body: message,
-    //     },
-    //   });
-
-    //   Alert.alert("Sucesso", "Mensagem de confirmação enviada com sucesso.");
-    //   setPacienteNome("");
-    //   setEmail("");
-    //   setMessage("");
-    // } catch (error) {
-    //   Alert.alert("Erro", "Houve um erro ao enviar a mensagem: " + error.message);
-    // }
+    Alert.alert("Sucesso", "Mensagem de confirmação enviada com sucesso.");
+    setPacienteNome("");
+    setEmail("");
+    setMessage("");
   };
 
   const getPatientDeviceToken = async (email) => {
@@ -133,13 +119,9 @@ const ConfirmarAgendamento = () => {
           onChangeText={setMessage}
           multiline
         />
-        <View style={styles.buttonContainer}>
-          <Button
-            title="Enviar Confirmação"
-            onPress={handleSendConfirmation}
-            color="#ff5c5c"
-          />
-        </View>
+        <TouchableOpacity style={styles.buttonContainer} onPress={handleSendConfirmation}>
+          <Text style={styles.buttonText}>Enviar Confirmação</Text>
+        </TouchableOpacity>
       </View>
     </LinearGradient>
   );
@@ -168,7 +150,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    width: "100%",
+    backgroundColor: '#17322D',
+    padding: 15,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    width: 200,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

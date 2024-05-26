@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import DocumentPicker from 'expo-document-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
-
 
 const ArquivoMedico = () => {
   const [patientEmail, setPatientEmail] = useState('');
@@ -69,13 +68,17 @@ const ArquivoMedico = () => {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <Button title="Selecionar Arquivo" onPress={handlePickFile} color="#ff5c5c" />
+        <TouchableOpacity style={styles.fileButton} onPress={handlePickFile}>
+          <Text style={styles.fileButtonText}>Selecionar Arquivo</Text>
+        </TouchableOpacity>
         {file && <Text style={styles.fileName}>{file.name}</Text>}
         <View style={styles.buttonContainer}>
           {uploading ? (
             <ActivityIndicator size="large" color="#fff" />
           ) : (
-            <Button title="Enviar Arquivo" onPress={handleSendFile} color="#ff5c5c" />
+            <TouchableOpacity style={styles.uploadButton} onPress={handleSendFile}>
+              <Text style={styles.uploadButtonText}>Enviar Arquivo</Text>
+            </TouchableOpacity>
           )}
         </View>
       </View>
@@ -108,6 +111,32 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     marginTop: 20,
+    alignItems: 'center',
+  },
+  fileButton: {
+    backgroundColor: '#17322D',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    width: '100%',
+  },
+  fileButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  uploadButton: {
+    backgroundColor: '#17322D',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  uploadButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
   fileName: {
     color: '#fff',

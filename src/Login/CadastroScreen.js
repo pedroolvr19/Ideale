@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
@@ -11,10 +12,17 @@ const CadastroScreen = ({ navigation }) => {
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [nome, setNome] = useState('');
   const [numeroPaciente, setNumeroPaciente] = useState('');
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
+  const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
 
   const handleCriarConta = async () => {
     if (!email || !senha || !confirmarSenha || !nome || !numeroPaciente) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
+      return;
+    }
+
+    if (senha.length < 5) {
+      Alert.alert('Erro', 'A senha deve ter no mínimo 5 caracteres.');
       return;
     }
 
@@ -76,7 +84,7 @@ const CadastroScreen = ({ navigation }) => {
         />
         <TextInput
           style={styles.input}
-          placeholder="Número para Contado"
+          placeholder="Número para Contato"
           keyboardType="numeric"
           value={numeroPaciente}
           onChangeText={setNumeroPaciente}
@@ -89,20 +97,30 @@ const CadastroScreen = ({ navigation }) => {
           value={email}
           onChangeText={setEmail}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Senha"
-          secureTextEntry
-          value={senha}
-          onChangeText={setSenha}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Confirmar Senha"
-          secureTextEntry
-          value={confirmarSenha}
-          onChangeText={setConfirmarSenha}
-        />
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.inputPassword}
+            placeholder="Senha"
+            secureTextEntry={!senhaVisivel}
+            value={senha}
+            onChangeText={setSenha}
+          />
+          <TouchableOpacity onPress={() => setSenhaVisivel(!senhaVisivel)}>
+            <Ionicons name={senhaVisivel ? "eye-off" : "eye"} size={24} color="#17322D" />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={styles.inputPassword}
+            placeholder="Confirmar Senha"
+            secureTextEntry={!confirmarSenhaVisivel}
+            value={confirmarSenha}
+            onChangeText={setConfirmarSenha}
+          />
+          <TouchableOpacity onPress={() => setConfirmarSenhaVisivel(!confirmarSenhaVisivel)}>
+            <Ionicons name={confirmarSenhaVisivel ? "eye-off" : "eye"} size={24} color="#17322D" />
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity style={styles.button} onPress={handleCriarConta}>
           <Text style={styles.buttonText}>Criar Conta</Text>
         </TouchableOpacity>
@@ -139,6 +157,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#fff',
     borderRadius: 15,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 300,
+    borderColor: '#fff',
+    borderWidth: 1,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+  },
+  inputPassword: {
+    flex: 1,
+    height: 40,
   },
   button: {
     backgroundColor: '#17322D',

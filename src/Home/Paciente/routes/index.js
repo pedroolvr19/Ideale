@@ -32,9 +32,13 @@ export const RootPacienteTab = () => {
                 name="Arquivos"
                 component={ArquivosStack}
                 options={{
+                    
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="document-text" size={size} color={color} />
+                        <Ionicons name="document-text" size={size} color={color} 
+                        />
+                        
                     ),
+                    headerShown: false,
                 }}
             />
             <Tab.Screen
@@ -44,6 +48,7 @@ export const RootPacienteTab = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="people" size={size} color={color} />
                     ),
+                    headerShown: false,
                 }}
             />
         </Tab.Navigator>

@@ -17,7 +17,7 @@ export const RootMedicoTab = () => {
             }}
         >
             <Tab.Screen
-                name="HomeTab"
+                name="Home"
                 component={MedicoStack}
                 options={{
                     tabBarIcon: ({ color, size }) => (
@@ -33,6 +33,9 @@ export const RootMedicoTab = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="document-text" size={size} color={color} />
                     ),
+              
+                headerShown: false,
+                    
                 }}
             />
             <Tab.Screen
@@ -42,6 +45,7 @@ export const RootMedicoTab = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="people" size={size} color={color} />
                     ),
+                    headerShown: false,
                 }}
             />
         </Tab.Navigator>

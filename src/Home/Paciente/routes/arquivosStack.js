@@ -8,6 +8,7 @@ export const ArquivosStack = () => {
     return (
         <Stack.Navigator
         initialRouteName="ArquivosHome"
+        options={{ headerShown: false }}
         >
             <Stack.Screen
                 name="ArquivosHome"
@@ -19,6 +20,7 @@ export const ArquivosStack = () => {
             <Stack.Screen
                 name="ArquivosDoPaciente"
                 component={ArquivoDoPaciente}
+                options={{ headerShown: false }}
             />
         
         </Stack.Navigator>

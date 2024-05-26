@@ -23,7 +23,7 @@ export const RootMedicoTab = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="home" size={size} color={color} />
                     ),
-                   
+                    headerShown: false,
                 }}
             />
             <Tab.Screen
@@ -33,6 +33,7 @@ export const RootMedicoTab = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="document-text" size={size} color={color} />
                     ),
+                    headerShown: false
                 }}
             />
             <Tab.Screen
@@ -42,6 +43,7 @@ export const RootMedicoTab = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="people" size={size} color={color} />
                     ),
+                    headerShown: false
                 }}
             />
         </Tab.Navigator>
