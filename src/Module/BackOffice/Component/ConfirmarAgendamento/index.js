@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import messaging from '@react-native-firebase/messaging';
 import { buscarPacientePeloEmail } from "../../service/buscarPacientePeloEmail";
 import { AgendarConsulta } from "../../service/AgendarConsulta";
+import axios from "axios";
 
 const ConfirmarAgendamento = () => {
   const [pacienteNome, setPacienteNome] = useState("");
@@ -27,19 +28,28 @@ const ConfirmarAgendamento = () => {
   };
 
   const handleSendConfirmation = async () => {
-    if (!pacienteNome || !email || !message) {
-      Alert.alert("Erro", "Por favor, preencha todos os campos.");
-      return;
+    // if (!pacienteNome || !email || !message) {
+    //   Alert.alert("Erro", "Por favor, preencha todos os campos.");
+    //   return;
+    // }
+
+    // AgendarConsulta("paciente", {
+    //   email: email,
+    //   dataConsulta: dataConsulta,
+    //   medico: emailMedico,
+    //   nomePaciente: pacienteNome,
+    //   nomeMedico: medicoNome,
+    // });
+    try {
+      await axios.post("http://192.168.1.107:3000/api/send-notification", {
+          title: "Titulo da notificação",
+          body: "Corpo da notificação",
+          email: email
+      })
+      console.log("Sucesso")
+    } catch (error) {
+        console.warn("Not: ", error)
     }
-
-    AgendarConsulta("paciente", {
-      email: email,
-      dataConsulta: dataConsulta,
-      medico: emailMedico,
-      nomePaciente: pacienteNome,
-      nomeMedico: medicoNome,
-    });
-
     Alert.alert("Sucesso", "Mensagem de confirmação enviada com sucesso.");
     setPacienteNome("");
     setEmail("");
