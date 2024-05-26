@@ -5,24 +5,48 @@ import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from '@react-navigation/native';
+import firestore from "@react-native-firebase/firestore";
 
 export default function BoletimGestor() {
-
-  
-
   const navigation = useNavigation();
 
   const [data, setData] = useState('');
-  const [nomePaciente, setNomePaciente] = useState('');
+  const [emailPaciente, setEmailPaciente] = useState('');
   const [diario, setDiario] = useState('');
   const [observacoes, setObservacoes] = useState('');
+
+  const handlePost = (payload) => {
+    try {
+      firestore()
+      .collection("Boletim")
+      .add(payload)
+      console.log("Boletim Salvo com sucesso");
+    } catch (error) {
+      console.log("Falha ao salvar o boletim: ", error);
+    }
+  }
+
+  const handleSubmit = () => {
+    if(!data || !emailPaciente || !diario || !observacoes) {
+      console.warn("Preencha os campos");
+      return;
+    };
+
+    const payload = {
+      date: data,
+      paciente_email: emailPaciente,
+      artigo: diario,
+      observacoes,
+    }
+    handlePost(payload);
+  }
 
   const handleVisto = async () => {
     const htmlContent = `
       <html>
         <body>
           <h1>Data: ${data}</h1>
-          <h2>Paciente: ${nomePaciente}</h2>
+          <h2>Paciente: ${emailPaciente}</h2>
           <p>Diário: ${diario}</p>
           <p>Observações: ${observacoes}</p>
         </body>
@@ -60,8 +84,8 @@ export default function BoletimGestor() {
           <TextInput
             style={styles.input}
             placeholder="Paciente:"
-            value={nomePaciente}
-            onChangeText={setNomePaciente}
+            value={emailPaciente}
+            onChangeText={setEmailPaciente}
             placeholderTextColor="#308168" 
           />
         </View>
@@ -85,7 +109,7 @@ export default function BoletimGestor() {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={handleVisto}
+          onPress={handleSubmit}
         >
           <Text style={styles.buttonText}>Visto</Text>
         </TouchableOpacity>

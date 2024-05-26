@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import auth from "@react-native-firebase/auth";
 
 function HomePacienteScreen({ navigation }) {
+  const [firstAccess, setFirstAccess] = useState(true);
+  const refreshFCMToken = async () => {
+    const userId = auth()?.currentUser?.uid;
+    const tokenFCM = await messaging().getToken();
+    firestore()
+    .collection("Paciente")
+    .doc(userId)
+    .update({
+      token_fcm: tokenFCM
+    })
+  }
+  useEffect(() => {
+    //toda vez que abrir o app chamar o refreshFCMToken
+    if(firstAccess) {
+      refreshFCMToken();
+    }
+    setFirstAccess(false)
+  }, []);
   return (
     <ImageBackground
       source={require('../img/background.png')}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 export default function BoletimPaciente() {
    
@@ -11,7 +12,9 @@ export default function BoletimPaciente() {
   useEffect(() => {
     const fetchBoletins = async () => {
       try {
-        const boletimSnapshot = await firestore().collection('Boletins').get();
+        const userEmail = auth()?.currentUser?.email
+        console.log("Começando busca por boletim")
+        const boletimSnapshot = await firestore().collection('Boletim').where("paciente_email", "==", userEmail).get();
         const boletimList = boletimSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setBoletins(boletimList);
       } catch (error) {
@@ -28,7 +31,9 @@ export default function BoletimPaciente() {
 
   const renderBoletim = ({ item }) => (
     <TouchableOpacity style={styles.boletimItem} onPress={() => handleBoletimPress(item)}>
-      <Text style={styles.boletimTitle}>{item.titulo}</Text>
+      <Text style={styles.boletimTitle}>{item.date}</Text>
+      <Text style={styles.boletimTitle}>{item.artigo}</Text>
+      <Text style={styles.boletimTitle}>{item.observacoes}</Text>
     </TouchableOpacity>
   );
 
