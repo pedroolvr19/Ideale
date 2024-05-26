@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, PermissionsAndroid } from 'react-native';
 import auth from "@react-native-firebase/auth";
+import messaging from '@react-native-firebase/messaging';
 
 function HomePacienteScreen({ navigation }) {
   const [firstAccess, setFirstAccess] = useState(true);
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  }
+  
   const refreshFCMToken = async () => {
     const userId = auth()?.currentUser?.uid;
     const tokenFCM = await messaging().getToken();
     firestore()
-    .collection("Paciente")
-    .doc(userId)
-    .update({
-      token_fcm: tokenFCM
-    })
+      .collection("Paciente")
+      .doc(userId)
+      .update({
+        token_fcm: tokenFCM
+      })
   }
   useEffect(() => {
     //toda vez que abrir o app chamar o refreshFCMToken
-    if(firstAccess) {
+    if (firstAccess) {
       refreshFCMToken();
     }
+    requestUserPermission();
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
     setFirstAccess(false)
   }, []);
   return (
@@ -39,16 +54,16 @@ function HomePacienteScreen({ navigation }) {
           >
             <Ionicons name="book" size={76} color="#308168" />
             <Text style={styles.buttonText}>Boletim Diário</Text>
-           
+
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Agenda')} 
+            onPress={() => navigation.navigate('Agenda')}
             options={{ headerShown: false }}
           >
             <Ionicons name="calendar" size={76} color="#308168" />
             <Text style={styles.buttonText}>Agendamentos</Text>
-            
+
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
@@ -56,7 +71,7 @@ function HomePacienteScreen({ navigation }) {
           >
             <Ionicons name="person" size={76} color="#308168" />
             <Text style={styles.buttonText}>Quem Somos?</Text>
-            
+
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
@@ -64,7 +79,7 @@ function HomePacienteScreen({ navigation }) {
           >
             <Ionicons name="help-circle" size={76} color="#308168" />
             <Text style={styles.buttonText}>Nosso Guia</Text>
-            
+
           </TouchableOpacity>
         </View>
       </View>
