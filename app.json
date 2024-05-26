@@ -28,6 +28,16 @@
       "eas": {
         "projectId": "9c08a0e9-cd17-464f-88a2-20cadfd8264d"
       }
-    }
+    },
+    "plugins": [
+      "@config-plugins/react-native-blob-util",
+      "@config-plugins/react-native-pdf",
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ]
+    ]
   }
 }

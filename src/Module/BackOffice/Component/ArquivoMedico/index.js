@@ -1,59 +1,49 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import DocumentPicker from 'expo-document-picker';
 import storage from '@react-native-firebase/storage';
-import firestore from '@react-native-firebase/firestore';
+import * as DocumentPicker from 'expo-document-picker';
+import { subirExames } from '../../service/subirExames';
+import { vincularExames } from '../../service/vincularExames';
 
 
 const ArquivoMedico = () => {
   const [patientEmail, setPatientEmail] = useState('');
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState({name: "", blob: {}});
   const [uploading, setUploading] = useState(false);
 
-  const handlePickFile = async () => {
+  const pickDocument = async () => {
     try {
-      const result = await DocumentPicker.getDocumentAsync({ type: '*/*' });
-      if (result.type === 'success') {
-        setFile(result);
+      const result = await DocumentPicker.getDocumentAsync({});
+      if (!result.canceled) {
+        const downloadFile = await fetch(result.assets[0].uri)
+        const blobFile = await downloadFile.blob();
+        setFile({name: result.assets[0].name, blob: blobFile});
       }
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível selecionar o arquivo.');
     }
+  }
+  const uploadDocument = async () => {
+    if(!file.blob) return;
+    const storageRef = storage().ref(`exames/${file.name}`);
+    try {
+      await storageRef.put(file.blob);
+      const url = await storageRef.getDownloadURL();
+      const exameId = await subirExames({pacienteEmail: patientEmail, urlPDF: url, nomeArquivo: file.name})
+      await vincularExames({referenciaParaExames: exameId, emailPaciente: patientEmail})
+      console.log(url);
+    } catch (error) {
+      console.warn("error: ", error)
+    }
+  }
+
+  const handlePickFile = async () => {
+    pickDocument();
   };
 
   const handleSendFile = async () => {
-    if (!patientEmail || !file) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos e selecione um arquivo.');
-      return;
-    }
-
-    setUploading(true);
-
-    const fileName = `${new Date().getTime()}_${file.name}`;
-    const fileRef = storage().ref().child(fileName);
-
-    try {
-      // Upload do arquivo para o Firebase Storage
-      await fileRef.putFile(file.uri);
-      const fileUrl = await fileRef.getDownloadURL();
-
-      // Adiciona metadados do arquivo ao Firestore
-      await firestore().collection('files').add({
-        name: file.name,
-        url: fileUrl,
-        patientEmail,
-        uploadedAt: firestore.FieldValue.serverTimestamp(),
-      });
-
-      Alert.alert('Sucesso', 'Arquivo enviado com sucesso.');
-      setPatientEmail('');
-      setFile(null);
-    } catch (error) {
-      Alert.alert('Erro', 'Houve um erro ao enviar o arquivo: ' + error.message);
-    } finally {
-      setUploading(false);
-    }
+    uploadDocument();
   };
 
   return (

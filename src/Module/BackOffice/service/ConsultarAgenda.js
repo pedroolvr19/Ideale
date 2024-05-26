@@ -7,7 +7,6 @@ export const ConsultarAgenda = async (tipoDoUsuario, payload) => {
             .collection("Agenda")
             .where(pacienteOuMedico, "==", payload.email)
             .get()
-            console.log(response.lenght)
         let listaDeConsultas = [];
         for(let currentData of response.docs) {
             console.log(currentData.data())

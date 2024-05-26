@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking, ActivityIndicator } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, Dimensions, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { buscarPdfDoPaciente } from '../../service/buscarPdfDoPaciente';
 
 const ArquivoPaciente = ({ navigation }) => {
   const [files, setFiles] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const lidarComOPdf = async () => {
     const url_pdf = await buscarPdfDoPaciente();
+    console.log("url_pdf: ", url_pdf);
     setFiles(url_pdf);
   }
 
@@ -16,25 +16,35 @@ const ArquivoPaciente = ({ navigation }) => {
     lidarComOPdf()
   }, []);
 
-  // if (loading) {
-  //   return (
-  //     <View style={styles.loadingContainer}>
-  //       <ActivityIndicator size="large" color="#10C2A2" />
-  //     </View>
-  //   );
-  // }
-
   return (
     <LinearGradient colors={['#10C2A2', '#11D26E']} style={styles.container}>
       <Text style={styles.title}>Arquivos Enviados pelo Médico</Text>
-      <TouchableOpacity style={styles.fileItem} onPress={() => navigation.navigate("ArquivosDoPaciente", { url_pdf: files })}>
-        <Text style={styles.fileName}>nome</Text>
-      </TouchableOpacity>
+      <FlatList
+        data={files}
+        keyExtractor={(_, index) => index}
+        renderItem={({item, index}) => (
+          <TouchableOpacity style={styles.fileItem} onPress={() => navigation.navigate("ArquivosDoPaciente", { uri: item.link })}>
+            <Text style={styles.fileName}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+      />
+
     </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  containerPdf: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginTop: 25,
+  },
+  pdf: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  },
   container: {
     flex: 1,
     padding: 20,
