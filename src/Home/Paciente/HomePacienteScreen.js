@@ -1,41 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, PermissionsAndroid } from 'react-native';
-import auth from "@react-native-firebase/auth";
-import messaging from '@react-native-firebase/messaging';
+import { startNotifications } from '../../services/requestUserPermissionMessaging';
 
 function HomePacienteScreen({ navigation }) {
-  const [firstAccess, setFirstAccess] = useState(true);
-
-  async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    if (enabled) {
-      console.log('Authorization status:', authStatus);
-    }
-  }
   
-  const refreshFCMToken = async () => {
-    const userId = auth()?.currentUser?.uid;
-    const tokenFCM = await messaging().getToken();
-    firestore()
-      .collection("Paciente")
-      .doc(userId)
-      .update({
-        token_fcm: tokenFCM
-      })
-  }
   useEffect(() => {
-    //toda vez que abrir o app chamar o refreshFCMToken
-    if (firstAccess) {
-      refreshFCMToken();
-    }
-    requestUserPermission();
-    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
-    setFirstAccess(false)
+    startNotifications();
   }, []);
   return (
     <ImageBackground

@@ -11,11 +11,10 @@ export const RootPacienteTab = () => {
     return (
         <Tab.Navigator
             initialRouteName="HomeTab"
-            tabBarOptions={{
-                activeTintColor: '#308168',
-                inactiveTintColor: '#308168',
-                style: styles.tabBar,
-                labelStyle: styles.tabLabel,
+            screenOptions={{
+                tabBarActiveTintColor: '#308168',
+                tabBarInactiveTintColor: '#308168',
+                tabBarStyle:styles.tabBar
             }}
         >
             <Tab.Screen

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import messaging from '@react-native-firebase/messaging';
 import { buscarPacientePeloEmail } from "../../service/buscarPacientePeloEmail";
 import { AgendarConsulta } from "../../service/AgendarConsulta";
 import axios from "axios";
@@ -23,8 +22,8 @@ const ConfirmarAgendamento = () => {
         const data = await buscarPacientePeloEmail({ emailMedico: email });
         const userName = data.docs[0].data().nome;
         setmedicoNome(userName);
+      }
     }
-  }
   };
 
   const handleSendConfirmation = async () => {
@@ -40,42 +39,16 @@ const ConfirmarAgendamento = () => {
     //   nomePaciente: pacienteNome,
     //   nomeMedico: medicoNome,
     // });
-    try {
-      await axios.post("http://192.168.1.107:3000/api/send-notification", {
-          title: "Titulo da notificação",
-          body: "Corpo da notificação",
-          email: email
-      })
-      console.log("Sucesso")
-    } catch (error) {
-        console.warn("Not: ", error)
-    }
+    axios.post("http://192.168.1.107:3000/api/send-notification", {
+      title: "Titulo da notificação",
+      body: "Corpo da notificação",
+      email: email
+    })
+    console.log(email)
     Alert.alert("Sucesso", "Mensagem de confirmação enviada com sucesso.");
     setPacienteNome("");
     setEmail("");
     setMessage("");
-  };
-
-  const getPatientDeviceToken = async (email) => {
-    try {
-      const response = await fetch('https://idealecare-26a84-default-rtdb.firebaseio.com/', { // Substitua pela sua URL real
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao buscar token do dispositivo.');
-      }
-
-      const data = await response.json();
-      return data.deviceToken;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
   };
 
   return (
