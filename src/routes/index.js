@@ -3,14 +3,13 @@ import auth from "@react-native-firebase/auth";
 import { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import RedefinirSenhaScreen from '../Login/RedefinirSenhaScreen';
-import LoginScreen from '../Login/LoginScreen';
-import CadastroScreen from '../Login/CadastroScreen';
 import InicioScreen from '../Login/InicioScreen';
 import PreloadScreen from '../Login/PreloadScreen';
 import { RootPacienteTab } from "../Home/Paciente/routes";
 import { RootMedicoTab } from "../Home/Medico/routes";
 import PerfilPM from "../Module/BackOffice/Component/PerfilPM";
-
+import { Login } from "../Module/Auth/screens/Login";
+import { Cadastro } from "../Module/Auth/screens/Cadastro";
 
 const Stack = createStackNavigator();
 
@@ -84,12 +83,12 @@ export const RootNavigate = () => {
               />
               <Stack.Screen
                 name="Cadastro"
-                component={CadastroScreen}
+                component={Cadastro}
                 options={{ headerShown: false }}
               />
               <Stack.Screen
                 name="Login"
-                component={LoginScreen}
+                component={Login}
                 options={{ headerShown: false }}
               />
               <Stack.Screen

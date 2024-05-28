@@ -4,7 +4,6 @@ import { refreshFCMToken } from "./refreshFcmToken";
 
 export const getFCMToken = async () => {
     const token = await messaging().getToken();
-    console.log(token)
     return token;
 }
 
