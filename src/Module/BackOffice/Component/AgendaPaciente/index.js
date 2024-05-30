@@ -46,6 +46,8 @@ const AgendaPaciente = ({ navigation }) => {
       style={styles.container}
     >
       <View style={styles.container}>
+        <Text style={styles.title}>Agendamentos</Text>
+        <Text style={styles.subtitle}>Agende sua consulta ou solicite visita e verifique seus agendamentos:</Text>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#17322D' }]}
           onPress={handleWhatsAppPress}
@@ -74,15 +76,12 @@ const AgendaPaciente = ({ navigation }) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={closeModal}
-         
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Situação dos Agendamentos</Text>
               
-
               {/* Informações sobre os agendamentos e ícones */}
-
               <FlatList
                 data={listaDeConsultas}
                 keyExtractor={(_, index) => index}
@@ -118,7 +117,23 @@ const styles = StyleSheet.create({
     padding: 20,
     headerShown: false
   },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginTop: -160,
+    marginBottom: 10,
+   
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 100,
+   
+  },
   button: {
+    
     backgroundColor: '#263E32',
     height: 70,
     width: 330,

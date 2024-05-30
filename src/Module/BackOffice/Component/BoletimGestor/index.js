@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
-
 import { LinearGradient } from 'expo-linear-gradient';
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from '@react-navigation/native';
@@ -18,8 +17,8 @@ export default function BoletimGestor() {
   const handlePost = (payload) => {
     try {
       firestore()
-      .collection("Boletim")
-      .add(payload)
+        .collection("Boletim")
+        .add(payload)
       console.log("Boletim Salvo com sucesso");
     } catch (error) {
       console.log("Falha ao salvar o boletim: ", error);
@@ -27,7 +26,7 @@ export default function BoletimGestor() {
   }
 
   const handleSubmit = () => {
-    if(!data || !emailPaciente || !diario || !observacoes) {
+    if (!data || !emailPaciente || !diario || !observacoes) {
       console.warn("Preencha os campos");
       return;
     };
@@ -73,6 +72,8 @@ export default function BoletimGestor() {
       style={styles.container}
     >
       <View style={styles.container}>
+        <Text style={styles.title}>Enviar Boletim Diário</Text>
+        <Text style={styles.subtitle}>Preencha o boletim diário do paciente:</Text>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -83,7 +84,7 @@ export default function BoletimGestor() {
           />
           <TextInput
             style={styles.input}
-            placeholder="Paciente:"
+            placeholder="Email do Paciente:"
             value={emailPaciente}
             onChangeText={setEmailPaciente}
             placeholderTextColor="#308168" 
@@ -91,7 +92,7 @@ export default function BoletimGestor() {
         </View>
         <View style={styles.inputContainer}>
           <TextInput
-            style={[styles.input, { height: 350 }]} 
+            style={[styles.input, { height: 200 }]} 
             placeholder="Digite seu diário..."
             value={diario}
             onChangeText={setDiario}
@@ -99,7 +100,7 @@ export default function BoletimGestor() {
             placeholderTextColor="#308168" 
           />
           <TextInput
-            style={[styles.input, { height: 100 }]} 
+            style={[styles.input, { height: 80 }]} 
             placeholder="Observações:"
             value={observacoes}
             onChangeText={setObservacoes}
@@ -111,7 +112,7 @@ export default function BoletimGestor() {
           style={styles.button}
           onPress={handleSubmit}
         >
-          <Text style={styles.buttonText}>Visto</Text>
+          <Text style={styles.buttonText}>Enviar</Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>
@@ -124,6 +125,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#fff',
+    marginBottom: 20,
   },
   inputContainer: {
     width: '100%',

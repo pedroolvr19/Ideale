@@ -27,10 +27,10 @@ export const PacienteStack = () => {
             <Stack.Screen
                 name="Agenda"
                 component={Agenda}
-                options={{
+                options={{ headerShown: false }}
                     
-                    headerStyle: { backgroundColor: "#17322D" },
-                }}
+            
+                
             />
             <Stack.Screen
                 name="NosconhecaScreen"

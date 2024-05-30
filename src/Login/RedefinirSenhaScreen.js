@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
+import { View, Text, StyleSheet, TextInput, Alert, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import auth from '@react-native-firebase/auth';
+import { useNavigation } from '@react-navigation/native';
 
 const RedefinirSenhaScreen = () => {
   const [email, setEmail] = useState("");
+  const navigation = useNavigation();
 
   const handlePasswordReset = () => {
     if (!email) {
@@ -29,7 +31,9 @@ const RedefinirSenhaScreen = () => {
       style={styles.container}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>Recuperar Senha</Text>
+        <Image source={require('../Home/img/logo2.png')} style={styles.image} />
+        <Text style={[styles.footerLink, styles.title]}>Recuperar Senha</Text>
+        <Text style={[styles.footerLink, styles.subtitle]}>Insira seu email para receber um link de redefinição de senha</Text>
         <TextInput
           style={styles.input}
           placeholder="Digite seu email"
@@ -39,13 +43,12 @@ const RedefinirSenhaScreen = () => {
           keyboardType="email-address"
           autoCapitalize="none"
         />
-        <View style={styles.buttonContainer}>
-          <Button
-            title="Enviar"
-            onPress={handlePasswordReset}
-            color="#ff5c5c"
-          />
-        </View>
+        <TouchableOpacity style={styles.buttonContainer} onPress={handlePasswordReset}>
+          <Text style={styles.buttonText}>Enviar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.backToLogin}>Voltar ao Login</Text>
+        </TouchableOpacity>
       </View>
     </LinearGradient>
   );
@@ -58,23 +61,56 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#fff",
-    marginBottom: 20,
+  image: {
+    width: 500,
+    height: 300,
+    marginBottom: -10,
+    marginTop: 110,
   },
   input: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "#fff",
-    borderRadius: 10,
+    width: 250,
+    height: 40,
+    borderColor: "white",
+    borderWidth: 1,
+    marginBottom: 15,
     paddingHorizontal: 10,
+    backgroundColor: "#fff",
+    borderRadius: 15,
+  },
+  buttonContainer: {
+    backgroundColor: "#1B3422",
+    padding: 10,
+    borderRadius: 20,
+    height: 50,
+    width: 120,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 10,
+  },
+  subtitle: {
     fontSize: 16,
     marginBottom: 20,
   },
-  buttonContainer: {
-    width: "100%",
+  footerLink: {
+   color: '#fff',
+      fontWeight: 'bold', // Adicione esta linha
+      textAlign: 'center',
+  },
+  backToLogin: {
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+    marginTop: 20,
+    marginBottom: 180,
   },
 });
 

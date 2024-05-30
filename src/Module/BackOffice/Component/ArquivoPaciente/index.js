@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, Dimensions, FlatList } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, Dimensions, FlatList, Alert, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { buscarPdfDoPaciente } from '../../service/buscarPdfDoPaciente';
+import { buscarPdfDoPaciente, excluirPdfDoPaciente } from '../../service/buscarPdfDoPaciente';
 
 const ArquivoPaciente = ({ navigation }) => {
   const [files, setFiles] = useState([]);
@@ -13,22 +13,51 @@ const ArquivoPaciente = ({ navigation }) => {
   }
 
   useEffect(() => {
-    lidarComOPdf()
+    lidarComOPdf();
   }, []);
+
+  const handleDelete = async (fileId) => {
+    try {
+      await excluirPdfDoPaciente(fileId);
+      setFiles(files.filter(file => file.id !== fileId));
+      Alert.alert("Sucesso", "Arquivo arquivado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao excluir arquivo: ", error);
+      Alert.alert("Erro", "Não foi possível arquivar o arquivo.");
+    }
+  }
+
+  const confirmDelete = (fileId) => {
+    Alert.alert(
+      "Arquivar Arquivo",
+      "Deseja arquivar esse arquivo?",
+      [
+        { text: "Cancelar", style: "cancel" },
+        { text: "Arquivar", onPress: () => handleDelete(fileId) }
+      ],
+      { cancelable: true }
+    );
+  }
 
   return (
     <LinearGradient colors={['#10C2A2', '#11D26E']} style={styles.container}>
-      <Text style={styles.title}>Arquivos Enviados pelo Médico</Text>
+      <Text style={styles.title}>Arquivos</Text>
+      <Text style={styles.subtitle}>Lista de arquivos enviados pelo médico:</Text>
       <FlatList
         data={files}
-        keyExtractor={(_, index) => index}
-        renderItem={({item, index}) => (
-          <TouchableOpacity style={styles.fileItem} onPress={() => navigation.navigate("ArquivosDoPaciente", { uri: item.link })}>
-            <Text style={styles.fileName}>{item.name}</Text>
-          </TouchableOpacity>
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.fileItem}>
+            <TouchableOpacity onPress={() => navigation.navigate("ArquivosDoPaciente", { uri: item.link })}>
+              <Text style={styles.fileName}>{item.name}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.deleteButton} onPress={() => confirmDelete(item.id)}>
+              <Text style={styles.deleteButtonText}>Arquivar</Text>
+            </TouchableOpacity>
+          </View>
         )}
+        ListEmptyComponent={<Text style={styles.emptyMessage}>Nenhum arquivo encontrado</Text>}
       />
-
     </LinearGradient>
   );
 };
@@ -38,7 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 25,
+    marginTop: 35,
   },
   pdf: {
     flex: 1,
@@ -54,17 +83,38 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 10,
+    textAlign: 'center',
+    marginTop: 30,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#fff',
     marginBottom: 20,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   fileItem: {
     padding: 15,
     backgroundColor: '#fff',
     borderRadius: 10,
     marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   fileName: {
-    fontSize: 16,
+    fontSize: 19,
+    fontWeight: 'bold',
+  },
+  deleteButton: {
+    backgroundColor: '#1B3422',
+    padding: 10,
+    borderRadius: 5,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
   emptyMessage: {
     textAlign: 'center',

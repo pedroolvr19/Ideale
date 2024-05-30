@@ -49,6 +49,8 @@ const ArquivoMedico = () => {
     <LinearGradient colors={['#10C2A2', '#11D26E']} style={styles.container}>
       <View style={styles.container}>
         <Text style={styles.title}>Enviar Arquivo para Paciente</Text>
+        <Text style={styles.subtitle}>Insira o email do paciente e selecione o arquivo desejado.</Text>
+        {file && <Text style={styles.fileName}>{file.name}</Text>}
         <TextInput
           style={styles.input}
           placeholder="Email do Paciente"
@@ -61,7 +63,6 @@ const ArquivoMedico = () => {
         <TouchableOpacity style={styles.fileButton} onPress={handlePickFile}>
           <Text style={styles.fileButtonText}>Selecionar Arquivo</Text>
         </TouchableOpacity>
-        {file && <Text style={styles.fileName}>{file.name}</Text>}
         <View style={styles.buttonContainer}>
           {uploading ? (
             <ActivityIndicator size="large" color="#fff" />
@@ -87,11 +88,24 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#fff',
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  fileName: {
+    color: '#fff',
+    marginBottom: 20,
+    fontSize: 18,
+    textAlign: 'center',
   },
   input: {
-    width: '100%',
-    height: 50,
+    width: '80%', // Ajuste da largura para deixá-la mais longa
+    height: 40, // Ajuste da altura para deixá-la mais fina
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingHorizontal: 10,
@@ -110,7 +124,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
-    width: '100%',
+    width: '80%', // Ajuste da largura para corresponder à caixa de email
   },
   fileButtonText: {
     color: '#fff',
@@ -127,11 +141,6 @@ const styles = StyleSheet.create({
   uploadButtonText: {
     color: '#fff',
     fontSize: 16,
-  },
-  fileName: {
-    color: '#fff',
-    marginTop: 10,
-    textAlign: 'center',
   },
 });
 

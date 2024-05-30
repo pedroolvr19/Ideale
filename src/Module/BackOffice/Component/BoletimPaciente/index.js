@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, TouchableHighlight } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -8,12 +8,13 @@ export default function BoletimPaciente() {
    
   const [boletins, setBoletins] = useState([]);
   const [selectedBoletim, setSelectedBoletim] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchBoletins = async () => {
       try {
-        const userEmail = auth()?.currentUser?.email
-        console.log("Começando busca por boletim")
+        const userEmail = auth()?.currentUser?.email;
+        console.log("Começando busca por boletim");
         const boletimSnapshot = await firestore().collection('Boletim').where("paciente_email", "==", userEmail).get();
         const boletimList = boletimSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setBoletins(boletimList);
@@ -27,6 +28,7 @@ export default function BoletimPaciente() {
 
   const handleBoletimPress = (boletim) => {
     setSelectedBoletim(boletim);
+    setModalVisible(true);
   };
 
   const renderBoletim = ({ item }) => (
@@ -44,22 +46,37 @@ export default function BoletimPaciente() {
     >
       <View style={styles.container}>
         <Text style={styles.title}>Boletins</Text>
-        {selectedBoletim ? (
-          <View style={styles.boletimContent}>
-            <Text style={styles.boletimTitle}>{selectedBoletim.titulo}</Text>
-            <Text style={styles.boletimText}>{selectedBoletim.conteudo}</Text>
-            <TouchableOpacity style={styles.backButton} onPress={() => setSelectedBoletim(null)}>
-              <Text style={styles.backButtonText}>Voltar</Text>
-            </TouchableOpacity>
+        <Text style={styles.subtitle}>Lista de boletins Diários:</Text>
+        <FlatList
+          data={boletins}
+          renderItem={renderBoletim}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={styles.listContainer}
+        />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{selectedBoletim?.date}</Text>
+              <Text style={styles.modalText}>{selectedBoletim?.artigo}</Text>
+              <Text style={styles.modalText}>{selectedBoletim?.observacoes}</Text>
+              <TouchableHighlight
+                style={{ ...styles.openButton, backgroundColor: "#17322D" }}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>Fechar</Text>
+              </TouchableHighlight>
+            </View>
           </View>
-        ) : (
-          <FlatList
-            data={boletins}
-            renderItem={renderBoletim}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.listContainer}
-          />
-        )}
+        </Modal>
       </View>
     </LinearGradient>
   );
@@ -76,7 +93,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
     color: "#fff",
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: "#fff",
     marginBottom: 20,
+    fontWeight: "bold",
   },
   listContainer: {
     width: "100%",
@@ -92,26 +115,40 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
-  boletimContent: {
-    width: "100%",
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
+    marginTop: 22
   },
-  boletimText: {
-    color: "#fff",
-    fontSize: 16,
-    marginVertical: 20,
-    textAlign: "center",
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 25,
+    padding: 55,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 22
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
   },
-  backButton: {
-    backgroundColor: "#17322D",
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 20,
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 20,
+    elevation: 0
   },
-  backButtonText: {
-    color: "#fff",
+  textStyle: {
+    color: "white",
     fontWeight: "bold",
-    fontSize: 18,
+    textAlign: "center"
   },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
 });
-

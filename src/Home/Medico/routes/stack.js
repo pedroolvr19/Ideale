@@ -3,6 +3,7 @@ import BoletimGestor from "../../../Module/BackOffice/Component/BoletimGestor";
 import HomeMedicoScreen from "../HomeMedicoScreen";
 import { Agenda } from "../../../Module/BackOffice/Screen/Agenda";
 import ArquivoMedico from "../../../Module/BackOffice/Component/ArquivoMedico";
+import NossoguiaScreen from "../../../Home/Paciente/Nossoguia/Nossoguia";
 const Stack = createStackNavigator();
 export const MedicoStack = () => {
     return (
@@ -22,6 +23,11 @@ export const MedicoStack = () => {
             <Stack.Screen
                 name="Agenda"
                 component={Agenda}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Nossoguia"
+                component={NossoguiaScreen}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

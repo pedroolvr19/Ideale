@@ -1,10 +1,11 @@
 import React from 'react';
-
 import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import auth from "@react-native-firebase/auth";
 
 function HomeMedicoScreen({ navigation }) {
+  const currentUserEmail = auth().currentUser?.email;
+
   return (
     <ImageBackground
       source={require('../img/background.png')}
@@ -17,17 +18,14 @@ function HomeMedicoScreen({ navigation }) {
         />
         <View style={styles.buttonContainer}>
           {
-            auth().currentUser?.email === "gestor@ideale.com" && (
+            currentUserEmail === "gestor@ideale.com" && (
               <TouchableOpacity
                 style={styles.button}
                 onPress={() => navigation.navigate('BoletimGestor')}
-                
               >
                 <Ionicons name="book" size={76} color="#308168" />
                 <Text style={styles.buttonText}>Boletim Diário</Text>
-
               </TouchableOpacity>
-
             )
           }
           <TouchableOpacity
@@ -37,8 +35,18 @@ function HomeMedicoScreen({ navigation }) {
           >
             <Ionicons name="calendar" size={76} color="#308168" />
             <Text style={styles.buttonText}>Agendamentos</Text>
-
           </TouchableOpacity>
+          {
+            currentUserEmail !== "gestor@ideale.com" && (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Nossoguia')}
+              >
+                <Ionicons name="information-circle" size={76} color="#308168" />
+                <Text style={styles.buttonText}>Nosso Guia</Text>
+              </TouchableOpacity>
+            )
+          }
         </View>
       </View>
     </ImageBackground>
@@ -61,7 +69,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 30,
+    paddingTop: 20,
     paddingBottom: 20,
   },
   title: {
@@ -73,6 +81,7 @@ export const styles = StyleSheet.create({
   image: {
     width: 400,
     height: 300,
+  
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -94,7 +103,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
-    marginBottom: 250,
+    marginTop: 290,
   },
   buttonText: {
     color: '#3D5945',

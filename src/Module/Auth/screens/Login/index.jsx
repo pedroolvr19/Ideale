@@ -1,9 +1,11 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { Image, Modal, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { styles } from "./styles";
-import { signInService } from "../../services/signIn";
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, Modal } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
+import { styles } from './styles';
+import { signInService } from '../../services/signIn';
 
-export const Login = () => {
+export const Login = ({ navigation }) => { // Adicione 'navigation' como parâmetro
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
     const [showTermsModal, setShowTermsModal] = useState(false);
@@ -11,23 +13,23 @@ export const Login = () => {
 
     const handleOpenTermsModal = () => {
         setShowTermsModal(true);
-      };
-    
-      const handleCloseTermsModal = () => {
-        setShowTermsModal(false);
-      };
-    
-      const handleEsqueciSenha = () => {
-        navigation.navigate("RedefinirSenha");
-      };
-    
-      const handleCheckboxPress = () => {
-        setIsChecked(!isChecked);
-      };
+    };
 
-      const handleSignIn = async () => {
-        await signInService({email, senha, isChecked});
-      }
+    const handleCloseTermsModal = () => {
+        setShowTermsModal(false);
+    };
+
+    const handleEsqueciSenha = () => {
+        navigation.navigate("RedefinirSenha");
+    };
+
+    const handleCheckboxPress = () => {
+        setIsChecked(!isChecked);
+    };
+
+    const handleSignIn = async () => {
+        await signInService({ email, senha, isChecked });
+    }
 
     return (
         <LinearGradient
@@ -77,6 +79,10 @@ export const Login = () => {
                     <Text style={styles.footerLink}>Esqueci minha senha</Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity onPress={() => navigation.navigate('Cadastro')}>
+                    <Text style={styles.footerLink}>Não tem uma conta? Cadastre-se</Text>
+                </TouchableOpacity>
+
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -96,7 +102,7 @@ export const Login = () => {
                                 garantir medidas de segurança para proteger esses dados contra
                                 acessos não autorizados ou vazamentos. Ao aceitar os termos da
                                 LGPD, o usuário está concordando com essas práticas de proteção
-                                de dados.{" "}
+                                de dados.
                             </Text>
                             <TouchableOpacity onPress={handleCloseTermsModal}>
                                 <Text style={styles.acceptButton}>Aceitar</Text>

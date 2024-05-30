@@ -94,10 +94,7 @@ export const RootNavigate = () => {
               <Stack.Screen
                 name="RedefinirSenha"
                 component={RedefinirSenhaScreen}
-                options={{
-                  title: "Redefinir Senha",
-                  headerStyle: { backgroundColor: "#17322D" },
-                }}
+                options={{ headerShown: false }}
               />
             </>
           )}

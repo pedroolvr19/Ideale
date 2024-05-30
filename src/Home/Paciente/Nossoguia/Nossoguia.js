@@ -1,58 +1,56 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { ScrollView, Image, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const Nosssoguia = () => {
+const Nossoguia = () => {
   return (
-    <LinearGradient
-      colors={['#10C2A2', '#11D26E']}
-      style={styles.container}
-    >
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        
-        <Text style={styles.title}>Quem Somos</Text>
-        <Text style={styles.text}>
-         bla bla bla depois eu boto o nome do povo 
-        </Text>
-        <Text style={styles.text}>
-        
-        </Text>
-        <Text style={styles.text}>
-         
-        </Text>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <Image
+          source={require('../../img/pdf1.png')}
+          style={styles.image} // Ajuste a altura conforme necessário
+        />
+        <Image
+          source={require('../../img/pdf2.png')}
+          style={styles.image} // Ajuste a altura conforme necessário
+        />
+        <Image
+          source={require('../../img/pdf3.png')}
+          style={styles.image} // Ajuste a altura conforme necessário
+        />
+        <Image
+          source={require('../../img/pdf4.png')}
+          style={styles.image} // Ajuste a altura conforme necessário
+        />
+        <Image
+          source={require('../../img/pdf5.png')}
+          style={styles.image} // Ajuste a altura conforme necessário
+        />
+        <Image
+          source={require('../../img/pdf6.png')}
+          style={styles.image} // Ajuste a altura conforme necessário
+        />
+        <Image
+          source={require('../../img/pdf7.png')}
+          style={styles.image} // Ajuste a altura conforme necessário
+        />
       </ScrollView>
-    </LinearGradient>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
+    backgroundColor: '#17322D', // Define o fundo como preto
   },
-  scrollContainer: {
+  scrollViewContent: {
     flexGrow: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
   },
-  logo: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "#fff",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  text: {
-    fontSize: 18,
-    color: "#fff",
-    marginBottom: 15,
-    textAlign: "center",
+  image: {
+    width: '100%',
+    height: 600, // Ajuste a altura conforme necessário
   },
 });
 
-export default Nosssoguia;
+export default Nossoguia;

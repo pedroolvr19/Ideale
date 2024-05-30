@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
       color: "#102114",
       textDecorationLine: "underline",
       marginTop: 25,
-      fontSize: 18,
+      fontSize: 17,
     },
     checkboxContainer: {
       flexDirection: "row",
@@ -102,4 +102,10 @@ export const styles = StyleSheet.create({
       color: "#fff",
       fontWeight: "bold",
     },
+    footerLink: {
+      color: '#fff',
+      fontWeight: 'bold', // Adicione esta linha
+      textAlign: 'center',
+      marginTop: 10,
+  },
   });

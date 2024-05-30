@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { signUpService } from '../../services/signUp';
+import { useNavigation } from '@react-navigation/native'; // Importe o hook useNavigation
 
 export const Cadastro = () => {
     const [email, setEmail] = useState('');
@@ -13,6 +14,8 @@ export const Cadastro = () => {
     const [numeroPaciente, setNumeroPaciente] = useState('');
     const [senhaVisivel, setSenhaVisivel] = useState(false);
     const [confirmarSenhaVisivel, setConfirmarSenhaVisivel] = useState(false);
+
+    const navigation = useNavigation(); // Use o hook useNavigation para obter o objeto navigation
 
     const lidarComCriacaoConta = async () => {
         await signUpService({confirmarSenha, email, nome, senha, numero: numeroPaciente});
