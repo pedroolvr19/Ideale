@@ -11,7 +11,7 @@ export const AgendarConsulta = (tipoDoUsuario, payload) => {
                 medico_resposanvel: payload.medico,
                 paciente: payload.email,
                 nome_paciente: payload.nomePaciente,
-                nome_medico: payload.nomeMedico,
+                
             })
     }
 }

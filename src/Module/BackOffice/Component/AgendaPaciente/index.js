@@ -46,8 +46,6 @@ const AgendaPaciente = ({ navigation }) => {
       style={styles.container}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>Agendamentos</Text>
-        <Text style={styles.subtitle}>Agende sua consulta ou solicite visita e verifique seus agendamentos:</Text>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#17322D' }]}
           onPress={handleWhatsAppPress}
@@ -76,12 +74,15 @@ const AgendaPaciente = ({ navigation }) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={closeModal}
+         
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Situação dos Agendamentos</Text>
               
+
               {/* Informações sobre os agendamentos e ícones */}
+
               <FlatList
                 data={listaDeConsultas}
                 keyExtractor={(_, index) => index}
@@ -91,7 +92,7 @@ const AgendaPaciente = ({ navigation }) => {
                       <Ionicons name="checkmark-circle-outline" size={24} color="#4CAF50" style={styles.icon} />
                       <Text style={styles.infoText}>Aprovado</Text>
                     </View>
-                    <Text>Você vai consultar com o medico: {item.medico_resposanvel} no dia:</Text>
+                    <Text style={styles.messageText}>Você vai consultar com o medico: {item.medico_resposanvel} no dia:</Text>
                     <Text>{item.data_da_consulta}</Text>
                   </>
                 )}
@@ -117,23 +118,7 @@ const styles = StyleSheet.create({
     padding: 20,
     headerShown: false
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginTop: -160,
-    marginBottom: 10,
-   
-  },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 100,
-   
-  },
   button: {
-    
     backgroundColor: '#263E32',
     height: 70,
     width: 330,
@@ -144,6 +129,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  messageText:{
+paddingBottom: 10,
+fontWeight: '500',
+  },
   buttonText: {
     color: '#fff',
     fontSize: 24,
@@ -152,6 +141,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+    marginTop: 10,
   },
   modalContainer: {
     flex: 1,
@@ -165,11 +155,13 @@ const styles = StyleSheet.create({
     padding: 20,
     width: '80%',
     alignItems: 'center',
+    
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#263E32',
   },
   infoContainer: {
     flexDirection: 'row',
@@ -179,6 +171,9 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 18,
     marginLeft: 10,
+    marginTop: 10,
+    fontWeight: '500',
+    
   },
   closeButton: {
     backgroundColor: '#263E32',

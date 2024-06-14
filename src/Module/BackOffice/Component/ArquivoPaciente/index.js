@@ -42,7 +42,7 @@ const ArquivoPaciente = ({ navigation }) => {
   return (
     <LinearGradient colors={['#10C2A2', '#11D26E']} style={styles.container}>
       <Text style={styles.title}>Arquivos</Text>
-      <Text style={styles.subtitle}>Lista de arquivos enviados pelo médico:</Text>
+      <Text style={styles.subtitle}>Aqui está listado todos os arquivos enviados pelos médicos:</Text>
       <FlatList
         data={files}
         keyExtractor={(item, index) => index.toString()}
@@ -80,16 +80,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#1B3422',
     marginBottom: 10,
     textAlign: 'center',
     marginTop: 30,
   },
   subtitle: {
-    fontSize: 16,
-    color: '#fff',
+    fontSize: 19,
+    color: '#1B3422',
     marginBottom: 20,
     textAlign: 'center',
     fontWeight: 'bold',

@@ -67,7 +67,7 @@ const PerfilPM = () => {
           </View>
         </View>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutButtonText}>Sair</Text>
+          <Text style={styles.logoutButtonText}>SAIR</Text>
         </TouchableOpacity>
       </View>
     </LinearGradient>
@@ -94,17 +94,18 @@ const styles = StyleSheet.create({
   },
   infoBox: {
     backgroundColor: "#f0f0f0",
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
     marginBottom: 10,
     height: 45,
+    width: 300,
     alignContent: "center",
     marginTop: 5,
   },
   infoTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#17322D",
     marginLeft: 10,
   },
   infoText: {
@@ -119,12 +120,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 20,
-    width: 200,
+    width: 150,
   },
   logoutButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 17,
   },
 });
 

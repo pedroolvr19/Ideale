@@ -45,8 +45,8 @@ export default function BoletimPaciente() {
       style={styles.container}
     >
       <View style={styles.container}>
-        <Text style={styles.title}>Boletins</Text>
-        <Text style={styles.subtitle}>Lista de boletins Diários:</Text>
+        <Text style={styles.title}>Boletim Diário</Text>
+        <Text style={styles.subtitle}>todos os boletins diários listados:</Text>
         <FlatList
           data={boletins}
           renderItem={renderBoletim}
@@ -92,11 +92,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#1B3422",
     marginBottom: 10,
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 20,
     color: "#fff",
     marginBottom: 20,
     fontWeight: "bold",
@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 10,
+    width: 310,
   },
   boletimTitle: {
     color: "#fff",
@@ -124,7 +125,7 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     backgroundColor: "white",
-    borderRadius: 25,
+    borderRadius: 20,
     padding: 55,
     alignItems: "center",
     shadowColor: "#000",

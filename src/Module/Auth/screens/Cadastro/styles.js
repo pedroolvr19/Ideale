@@ -11,10 +11,7 @@ export const styles = StyleSheet.create({
       fontSize: 30,
       fontWeight: 'bold',
       marginBottom: 20,
-      color: '#fff',
-      textShadowColor: '#000',
-      textShadowOffset: { width: 1, height: 1 },
-      textShadowRadius: 1,
+      color: '#17322D',
     },
     input: {
       width: 300,

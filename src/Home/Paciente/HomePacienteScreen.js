@@ -41,7 +41,7 @@ function HomePacienteScreen({ navigation }) {
             onPress={() => navigation.navigate('NosconhecaScreen')}
           >
             <Ionicons name="person" size={76} color="#308168" />
-            <Text style={styles.buttonText}>Quem Somos?</Text>
+            <Text style={styles.buttonText}>Sobre Nós</Text>
 
           </TouchableOpacity>
           <TouchableOpacity

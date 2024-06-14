@@ -7,7 +7,7 @@ import axios from "axios";
 
 const ConfirmarAgendamento = () => {
   const [pacienteNome, setPacienteNome] = useState("");
-  const [medicoNome, setmedicoNome] = useState("");
+  
   const [email, setEmail] = useState("");
   const [emailMedico, setEmailMedico] = useState("");
   const [message, setMessage] = useState("");
@@ -27,18 +27,20 @@ const ConfirmarAgendamento = () => {
   };
 
   const handleSendConfirmation = async () => {
-    // if (!pacienteNome || !email || !message) {
-    //   Alert.alert("Erro", "Por favor, preencha todos os campos.");
-    //   return;
-    // }
+     if (!pacienteNome || !email || !message) {
+       Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      return;
+  }
 
-    // AgendarConsulta("paciente", {
-    //   email: email,
-    //   dataConsulta: dataConsulta,
-    //   medico: emailMedico,
-    //   nomePaciente: pacienteNome,
-    //   nomeMedico: medicoNome,
-    // });
+     AgendarConsulta("paciente", {
+       email: email,
+      dataConsulta: dataConsulta,
+       medico: emailMedico,
+
+    
+       nomePaciente: pacienteNome,
+      
+     });
     axios.post("http://192.168.1.107:3000/api/send-notification", {
       title: "Titulo da notificação",
       body: "Corpo da notificação",
@@ -116,6 +118,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
+    //
   },
   title: {
     fontSize: 24,
@@ -124,8 +127,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: "100%",
-    height: 50,
+    //container onde escreve informacao
+    width: 300,
+    height: 60,
     backgroundColor: "#fff",
     borderRadius: 10,
     paddingHorizontal: 10,

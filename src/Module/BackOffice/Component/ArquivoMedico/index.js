@@ -87,12 +87,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#17322D',
     marginBottom: 10,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 20,
     color: '#fff',
     marginBottom: 20,
     textAlign: 'center',
@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   input: {
-    width: '80%', // Ajuste da largura para deixá-la mais longa
-    height: 40, // Ajuste da altura para deixá-la mais fina
+    width: 300, // Ajuste da largura para deixá-la mais longa
+    height: 50, // Ajuste da altura para deixá-la mais fina
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingHorizontal: 10,
@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonContainer: {
-    width: '100%',
-    marginTop: 20,
+    width: 200,
+    marginTop: 30,
     alignItems: 'center',
   },
   fileButton: {
@@ -123,8 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 20,
-    width: '80%', // Ajuste da largura para corresponder à caixa de email
+    width: 300, // Ajuste da largura para corresponder à caixa de email
   },
   fileButtonText: {
     color: '#fff',

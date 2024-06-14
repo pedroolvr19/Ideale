@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
       borderRadius: 15,
     },
     button: {
-      backgroundColor: "#1B3422",
+      backgroundColor: "#17322D",
       padding: 10,
       borderRadius: 20,
       height: 50,
