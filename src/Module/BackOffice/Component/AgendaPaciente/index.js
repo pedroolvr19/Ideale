@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, FlatList, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Linking } from 'react-native';
 import auth from "@react-native-firebase/auth";
@@ -8,13 +7,13 @@ import { ConsultarAgenda } from '../../service/ConsultarAgenda';
 
 const handleWhatsAppPress = () => {
   const phoneNumber = '+558183685500';
-  const message = 'Gostaria de marcar uma consulta.';
+  const message = 'Olá! Gostaria de marcar uma consulta.';
   Linking.openURL(`whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`);
 };
 
 const handleWhatsAppVisitaPress = () => {
   const phoneNumber = '+558183685500';
-  const message = 'Gostaria de agendar uma visita.';
+  const message = 'Olá! Gostaria de agendar uma visita.';
   Linking.openURL(`whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`);
 };
 
@@ -41,30 +40,31 @@ const AgendaPaciente = ({ navigation }) => {
   }, [])
 
   return (
-    <LinearGradient
-      colors={['#10C2A2', '#11D26E']}
+    <ImageBackground
+      source={require('../../../../Home/img/bck2.jpg')}
       style={styles.container}
     >
+      <Text style={styles.tittleText}> Agendamentos </Text>
       <View style={styles.container}>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#17322D' }]}
+          style={styles.button}
           onPress={handleWhatsAppPress}
         >
-          <Ionicons name="chatbubble-ellipses-outline" size={24} color="white" style={styles.icon} />
+          <Ionicons name="chatbubble-ellipses-outline" size={40} color="#17322D" style={styles.icon} />
           <Text style={styles.buttonText}>Solicitar Consulta</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#17322D' }]}
+          style={styles.button}
           onPress={handleWhatsAppVisitaPress}
         >
-          <Ionicons name="calendar-outline" size={24} color="white" style={styles.icon} />
+          <Ionicons name="calendar-outline" size={40} color="#17322D" style={styles.icon} />
           <Text style={styles.buttonText}>Solicitar Visita</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, { backgroundColor: '#17322D' }]}
+          style={styles.button}
           onPress={handleMeusAgendamentosPress}
         >
-          <Ionicons name="calendar" size={24} color="white" style={styles.icon} />
+          <Ionicons name="calendar" size={40} color="#17322D" style={styles.icon} />
           <Text style={styles.buttonText}>Meus Agendamentos</Text>
         </TouchableOpacity>
 
@@ -74,25 +74,22 @@ const AgendaPaciente = ({ navigation }) => {
           transparent={true}
           visible={modalVisible}
           onRequestClose={closeModal}
-         
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalTitle}>Situação dos Agendamentos</Text>
-              
 
               {/* Informações sobre os agendamentos e ícones */}
-
               <FlatList
                 data={listaDeConsultas}
-                keyExtractor={(_, index) => index}
+                keyExtractor={(_, index) => index.toString()}
                 renderItem={({ item }) => (
                   <>
                     <View style={styles.infoContainer}>
-                      <Ionicons name="checkmark-circle-outline" size={24} color="#4CAF50" style={styles.icon} />
+                      <Ionicons name="checkmark-circle-outline" size={40} color="#4CAF50" style={styles.icon} />
                       <Text style={styles.infoText}>Aprovado</Text>
                     </View>
-                    <Text style={styles.messageText}>Você vai consultar com o medico: {item.medico_resposanvel} no dia:</Text>
+                    <Text style={styles.messageText}>Você vai consultar com o médico: {item.medico_responsavel} no dia:</Text>
                     <Text>{item.data_da_consulta}</Text>
                   </>
                 )}
@@ -106,7 +103,7 @@ const AgendaPaciente = ({ navigation }) => {
           </View>
         </Modal>
       </View>
-    </LinearGradient>
+    </ImageBackground>
   );
 };
 
@@ -116,32 +113,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    headerShown: false
+  },
+  tittleText: {
+    fontSize: 28,
+    marginTop: 50,
+    fontWeight: '600',
+    color: '#1B3422',
   },
   button: {
-    backgroundColor: '#263E32',
-    height: 70,
+    backgroundColor: '#fff',
+    height: 100,
     width: 330,
-    paddingVertical: 15,
-    marginBottom: 20,
+    marginBottom: 5,
     borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingHorizontal: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5, // Para Android
+    marginTop: 20, // Adiciona margem superior para mover os botões para cima
   },
-  messageText:{
-paddingBottom: 10,
-fontWeight: '500',
+  messageText: {
+    paddingBottom: 10,
+    fontWeight: '500',
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 24,
+    color: '#17322D',
+    fontSize: 24, // Aumenta o tamanho da fonte
     fontWeight: 'bold',
-    marginLeft: 10,
+    marginLeft: 15, // Adiciona espaço entre o ícone e o texto
   },
   icon: {
-    marginRight: 10,
-    marginTop: 10,
+    color: '#17322D',
   },
   modalContainer: {
     flex: 1,
@@ -155,7 +162,6 @@ fontWeight: '500',
     padding: 20,
     width: '80%',
     alignItems: 'center',
-    
   },
   modalTitle: {
     fontSize: 20,
@@ -173,7 +179,6 @@ fontWeight: '500',
     marginLeft: 10,
     marginTop: 10,
     fontWeight: '500',
-    
   },
   closeButton: {
     backgroundColor: '#263E32',

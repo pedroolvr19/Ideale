@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from '@react-navigation/native';
 import firestore from "@react-native-firebase/firestore";
+import axios from "axios";
 
 export default function BoletimGestor() {
   const navigation = useNavigation();
@@ -14,14 +15,30 @@ export default function BoletimGestor() {
   const [diario, setDiario] = useState('');
   const [observacoes, setObservacoes] = useState('');
 
-  const handlePost = (payload) => {
+  const handlePost = async (payload) => {
     try {
-      firestore()
+      await firestore()
         .collection("Boletim")
-        .add(payload)
+        .add(payload);
       console.log("Boletim Salvo com sucesso");
+      Alert.alert("Sucesso", "Sucesso ao enviar boletim");
+
+      // Enviar notificação via Axios
+      await axios.post("http://192.168.1.107:3000/api/send-notification", {
+        title: "Titulo da notificação",
+        body: "Corpo da notificação",
+        email: emailPaciente
+      });
+      console.log(emailPaciente);
+      Alert.alert("Sucesso", "Mensagem de confirmação enviada com sucesso.");
+      
+      // Limpar campos
+      setData("");
+      setEmailPaciente("");
+      setDiario("");
+      setObservacoes("");
     } catch (error) {
-      console.log("Falha ao salvar o boletim: ", error);
+      console.log("Falha ao salvar o boletim ou enviar notificação: ", error);
     }
   }
 

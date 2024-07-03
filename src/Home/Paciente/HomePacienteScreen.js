@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, PermissionsAndroid } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import { startNotifications } from '../../services/requestUserPermissionMessaging';
 
 function HomePacienteScreen({ navigation }) {
-  
+
   useEffect(() => {
     startNotifications();
   }, []);
+
   return (
     <ImageBackground
       source={require('../img/background.png')}
@@ -92,7 +93,7 @@ export const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '90%', // Ajustado para 90% da largura da tela para evitar problemas de layout
+    width: '90%',
     marginTop: 20,
   },
   button: {
@@ -101,12 +102,13 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '45%', // Largura ajustada para ocupar 45% da largura da tela (50% para deixar espaço entre os botões)
-    aspectRatio: 1, // Mantém a proporção quadrada
+    width: '45%',
+    aspectRatio: 1,
     shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
+    elevation: 5,  // Adicionada a propriedade elevation
     marginBottom: 20,
   },
   buttonText: {
