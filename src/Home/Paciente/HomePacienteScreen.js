@@ -98,17 +98,16 @@ export const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10,
+    borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
     width: '45%',
     aspectRatio: 1,
     shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,  // Adicionada a propriedade elevation
+    shadowOpacity: 0.9,
+    shadowRadius: 6,
+    elevation: 7,  // Adicionada a propriedade elevation
     marginBottom: 20,
   },
   buttonText: {

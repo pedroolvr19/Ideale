@@ -41,9 +41,9 @@ const AgendaPaciente = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require('../../../../Home/img/bck2.jpg')}
-      style={styles.container}
-    >
+    source={require('../../../../Home/img/backg.png')}
+    style={styles.container}
+  >
       <Text style={styles.tittleText}> Agendamentos </Text>
       <View style={styles.container}>
         <TouchableOpacity
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   tittleText: {
     fontSize: 28,
-    marginTop: 50,
+    marginTop: 15,
     fontWeight: '600',
     color: '#1B3422',
   },

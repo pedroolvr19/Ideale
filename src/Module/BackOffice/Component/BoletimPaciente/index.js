@@ -37,9 +37,9 @@ export default function BoletimPaciente() {
 
   return (
     <ImageBackground
-      source={require('../../../../Home/img/bck2.jpg')}
-      style={styles.backgroundImage}
-    >
+    source={require('../../../../Home/img/backg.png')}
+    style={styles.container}
+  >
         <View style={styles.container}>
           <Text style={styles.title}>Boletim Diário</Text>
           <FlatList
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   title: {
-    marginTop: 50,
+    marginTop: 5,
     fontSize: 28,
     fontWeight: "bold",
     color: "#1B3422",

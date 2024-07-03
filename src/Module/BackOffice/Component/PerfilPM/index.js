@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, Alert, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, Alert, TouchableOpacity, ImageBackground } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -43,8 +43,8 @@ const PerfilPM = () => {
   };
 
   return (
-    <LinearGradient
-      colors={['#10C2A2', '#11D26E']}
+    <ImageBackground
+      source={require('../../../../Home/img/backg.png')}
       style={styles.container}
     >
       <View style={styles.container}>
@@ -70,7 +70,7 @@ const PerfilPM = () => {
           <Text style={styles.logoutButtonText}>SAIR</Text>
         </TouchableOpacity>
       </View>
-    </LinearGradient>
+    </ImageBackground>
   );
 };
 
@@ -79,15 +79,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    paddingTop: 50,
+    paddingTop: 25,
+    
   },
   profileImage: {
     width: 150,
     height: 150,
     borderRadius: 75,
     marginBottom: 20,
-    borderWidth: 2,
-    borderColor: "#FFF",
+    borderWidth: 1,
+    borderColor: "#17322D",
   },
   infoContainer: {
     width: "80%",
@@ -101,12 +102,17 @@ const styles = StyleSheet.create({
     width: 300,
     alignContent: "center",
     marginTop: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5, // Para Android
   },
   infoTitle: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#17322D",
-    marginLeft: 10,
+    marginLeft: 5,
   },
   infoText: {
     color: '#17322D',

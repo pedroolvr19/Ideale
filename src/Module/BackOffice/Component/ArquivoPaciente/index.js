@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity, Dimensions, FlatList, Alert, View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, Dimensions, FlatList, Alert, View, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { buscarPdfDoPaciente, excluirPdfDoPaciente } from '../../service/buscarPdfDoPaciente';
 
@@ -40,9 +40,11 @@ const ArquivoPaciente = ({ navigation }) => {
   }
 
   return (
-    <LinearGradient colors={['#10C2A2', '#11D26E']} style={styles.container}>
+    <ImageBackground
+    source={require('../../../../Home/img/backg.png')}
+    style={styles.container}
+  >
       <Text style={styles.title}>Arquivos</Text>
-      <Text style={styles.subtitle}>Aqui está listado todos os arquivos enviados pelos médicos:</Text>
       <FlatList
         data={files}
         keyExtractor={(item, index) => index.toString()}
@@ -58,7 +60,7 @@ const ArquivoPaciente = ({ navigation }) => {
         )}
         ListEmptyComponent={<Text style={styles.emptyMessage}>Nenhum arquivo encontrado</Text>}
       />
-    </LinearGradient>
+    </ImageBackground>
   );
 };
 
@@ -67,7 +69,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    marginTop: 35,
+    marginTop: 35, 
+     
   },
   pdf: {
     flex: 1,
@@ -78,30 +81,30 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
+
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#1B3422',
-    marginBottom: 10,
+    marginBottom: 4,
     textAlign: 'center',
-    marginTop: 30,
-  },
-  subtitle: {
-    fontSize: 19,
-    color: '#1B3422',
-    marginBottom: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 60,
   },
   fileItem: {
-    padding: 15,
+    padding: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
     marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center', 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.9,
+    shadowRadius: 2,
+    elevation: 6, // Para Android
   },
   fileName: {
     fontSize: 19,
