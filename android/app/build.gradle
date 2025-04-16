@@ -86,7 +86,7 @@ android {
 
     namespace 'com.pedrorty.IdealeCare'
     defaultConfig {
-        applicationId 'com.pedrorty.IdealeCare'
+        applicationId 'com.pedrorty.idealeCare'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
